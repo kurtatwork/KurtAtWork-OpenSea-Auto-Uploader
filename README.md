@@ -1,4 +1,4 @@
-KurtAtWork-OpenSea-Automatic-Uploader version-1.0.0                                                          
+# KurtAtWork-OpenSea-Automatic-Uploader version-1.0.0                                                          
 
 # Automatically upload your NFTs on Opensea using Python Selenium.
 
@@ -29,7 +29,7 @@ This script allows you to upload and sell **as many NFTs as you want to Opensea*
 
 **You can decide whether you want to upload or sell your NFTs, or both**. If you upload your NFTs and sell them later, a CSV file is created with the URL of the NFT as well as its Blockchain and supply number.
 
-➜ **If you sell any NFT with this bot, you can consider sharing some of your earnings**: 😉
+➜ **If you sell any NFT with this bot, you can consider sharing some of your earnings**: 😉 
 **0x8736ee29f772b9a972547c228a5f43e427e783ae** (Ethereum).  
 ➜ **Or you can buy me a NFT from my collection [Crypto Parrot](https://opensea.io/collection/letsgobrandon-nft) if this bot was useful to you**.
 
