@@ -1,14 +1,14 @@
 # KurtAtWork-OpenSea-Automatic-Uploader version-1.0.0                                                          
 
-Hey everyone, I forked a copy of another Auto-Uploader that I downloaded from a github repo. Former code had issues uploading multiple NFTs (i could only get it to mint and list ONE NFT no matter what i did to the code to change it, tried many many changes), also there were issues with actually listing them (former code only had a comment at the line where the sale was supposed to happen saying 'Do this'), and other problems. 
+Hey everyone, I forked a copy of another Auto-Uploader that I downloaded from a github repo. Former code had issues uploading multiple NFTs (I could only get it to mint and list ONE NFT no matter what I did to the code to change it, tried many many changes), also there were issues with actually listing them (former code only had a comment at the line where the sale was supposed to happen saying 'Do this'), and other problems. 
 
-after weeks of trying to get it to upload more than one NFT at a time and having zero success, I ended up giving up on modifying the old code and decided to rewrite the entire thing from the ground up and using a few bits and pieces from the old code that actually worked. 
+After weeks of trying to get it to upload more than one NFT at a time and having zero success, I ended up giving up on modifying the old code and decided to rewrite the entire thing from the ground up and using a few bits and pieces from the old code that actually worked. 
 
 Anyway, here it is... it only works with Json files currently because that's what i needed. This project was built more around my own needs and is uploaded to this repo in that way as well... 
 
-its not really designed to be the most user friendly or fully featured, its just a wham-bam-thankyou-ma'am sorta Git'er Done kinda project. 
+its not really designed to be the most user friendly or fully featured, its just a wham-bam thank you ma'am sorta "Git'er Done" kinda project. 
 
-Changes might come down the road, but for the time being, if you're using multiple json files to upload this will work for you.
+Changes might come down the road, but for the time being, if you're using multiple json files to upload to opensea, this will work for you.
 
 # Automatically upload your NFTs on Opensea using Python Selenium.
 
@@ -35,7 +35,7 @@ Changes might come down the road, but for the time being, if you're using multip
 
 ## What does this bot do?
 
-This script allows you to upload and sell **as many NFTs as you want to Opensea**, all **automatically** and **quickly** (about 2.5 NFTs per minute). **All metadata are integrated**, and the **Ethereum** and **Polygon** Blockchains are supported.  
+This script allows you to upload and sell **as many NFTs as you want to Opensea**, all **automatically** and **quickly** (about 2 NFTs per minute) **with metadata integrated**, and **Ethereum** and **Polygon** Blockchains are supported.  
 
 **You can decide whether you want to upload or sell your NFTs, or both**. If you upload your NFTs and sell them later, a CSV file is created with the URL of the NFT as well as its Blockchain and supply number.
 
@@ -653,14 +653,14 @@ If you do not want to add details to the values not required, leave:
           <td>[True, "wallet"]
            <br>[False]
            <br>False</td>
-          <td>"specific_buyer": [true, "0x8736Ee29F772B9A972547C228a5F43E427E783AE"]
+          <td>"specific_buyer": [true, "0x8736ee29f772b9a972547c228a5f43e427e783ae"]
               <br>"specific_buyer": [false]
               <br>"specific_buyer": false</td>
-          <td>[True, "0x8736Ee29F772B9A972547C228a5F43E427E783AE"];;
+          <td>[True, "0x8736ee29f772b9a972547c228a5f43e427e783ae"];;
              <br>[False];;
              <br>False;;
           </td>
-          <td>[True, "0x8736Ee29F772B9A972547C228a5F43E427E783AE"]
+          <td>[True, "0x8736ee29f772b9a972547c228a5f43e427e783ae"]
              <br>[False]
              <br>False
           </td>
