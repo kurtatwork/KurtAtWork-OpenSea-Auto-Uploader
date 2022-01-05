@@ -1,12 +1,8 @@
-&nbsp &nbsp &nbsp __ &nbsp __ &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp __ &nbsp &nbsp &nbsp &nbsp ___ &nbsp &nbsp __ &nbsp &nbsp &nbsp &nbsp _ &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp __ &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp __ &nbsp &nbsp <br>
-&nbsp &nbsp / &nbsp //_/_ &nbsp ______/ &nbsp /_ &nbsp &nbsp / &nbsp _ &nbsp |/ &nbsp /_ &nbsp &nbsp | &nbsp | &nbsp /| &nbsp / &nbsp /__ &nbsp &nbsp ____/ &nbsp /__<br>
-&nbsp/&nbsp,<&nbsp/&nbsp//&nbsp/&nbsp__/&nbsp__/&nbsp/&nbsp__&nbsp/&nbsp__/&nbsp&nbsp|&nbsp|/&nbsp|/&nbsp/&nbsp_&nbsp\/&nbsp__/&nbsp&nbsp'_/<br>
-/_/|_|\_,_/_/&nbsp&nbsp\__/&nbsp/_/&nbsp|_\__/&nbsp&nbsp&nbsp|__/|__/\___/_/&nbsp/_/\_\&nbsp<br>
-KurtAtWork-OpenSea-Automatic-Uploader-version-1.0.0                                                          
+KurtAtWork-OpenSea-Automatic-Uploader version-1.0.0                                                          
 
 # Automatically upload your NFTs on Opensea using Python Selenium.
 
-* **(_Version 1.4.2 - January 05, 2022_).**
+* **(_Version 1.0.0 - January 05, 2022_).**
 * Sign up on [Opensea](https://opensea.io/?ref=0x8736ee29f772b9a972547c228a5f43e427e783ae) (Affiliate link).
 * Sign up on [MetaMask](https://metamask.io/).
 
