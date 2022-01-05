@@ -1,696 +1,561 @@
 """
-@author: Maxime.
-
-Github: https://github.com/maximedrn
-Version: 1.4.2
+@author: Kurt At Work. 
+Github: https://github.com/kurtatwork
+Version: 1.0
 """
-
-
 # Colorama module: pip install colorama
-from colorama import init, Fore, Style  # Do not work on MacOS and Linux.
-
+import json
+from colorama import init, Fore, Style
 # Selenium module imports: pip install selenium
+from selenium.webdriver import ActionChains
 from selenium import webdriver
+from selenium.common.exceptions import TimeoutException as TE
+from selenium.common.exceptions import ElementClickInterceptedException as ECIE
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait as WDW
-from selenium.common.exceptions import TimeoutException as TE
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-
-# Python default imports.
+# Python default import.
+from time import sleep
 from glob import glob
-import traceback as tb
 import os
 
-
 """Colorama module constants."""
-if os.name == 'nt':
-    init(convert=True)  # Init the Colorama module.
-    red = Fore.RED  # Red color.
-    green = Fore.GREEN  # Green color.
-    yellow = Fore.YELLOW  # Yellow color.
-    reset = Style.RESET_ALL  # Reset color attribute.
-else:  # For MacOS and Linux users.
-    red, green, yellow, reset = '', '', '', ''
+init(convert=True)  # Init colorama module.
+red = Fore.RED  # Red color.
+green = Fore.GREEN  # Green color.
+yellow = Fore.YELLOW  # Yellow color.
+reset = Style.RESET_ALL  # Reset color attribute.
 
+# webdriver and metamask paths
+webdriver_path = 'assets/chromedriver.exe'
+metamask_extension_path = 'assets/MetaMask.crx'
 
-class Reader:
-    """Read files and extract NFTs data. Convert all types into a list."""
-
-    def __init__(self, path: str) -> None:
-        """Basically open a file and get all NFTs' data."""
-        # Get file's extension to lowercase (MacOS support).
-        self.path = path  # Instance the file path.
-        # Get splitted file name (['text', '.txt']) and then remove the dot.
-        self.extension = os.path.splitext(self.path)[1][1:].lower()
-        # Check if the extension is supported by the Reader class.
-        if self.extension in ('json', 'csv', 'xlsx'):
-            # Eval function: self.extract_{FILE_EXTENSION}_file()
-            eval('self.extract_' + self.extension + '_file()')
-        else:  # Stop running the script.
-            exit('The file extension is not supported.')
-
-    def extract_json_file(self) -> None:
-        """Transform JSON file format to a list of dictionaries."""
-        from json import loads  # A Python default import.
-        # Load and read the JSON file and extract "nft" part.
-        self.file = loads(open(self.path, encoding='utf-8').read())['nft']
-        self.lenght_file = len(self.file)  # Number of NFTs.
-
-    def extract_csv_file(self) -> None:
-        """Transform CSV file format to a list of dictionaries."""
-        # Open file and splitlines (every "\n") and remove headers.
-        # It gets a list of each rows.
-        self.file = open(self.path, encoding='utf-8').read().splitlines()[1:]
-        self.lenght_file = len(self.file)  # Number of NFTs.
-
-    def extract_xlsx_file(self) -> None:
-        """Transform XLSX file format to a dictionnary {key: {value, ...}}."""
-        from pandas import read_excel  # Pandas module: pip install pandas
-        self.file = read_excel(self.path)  # Read the Excel (XLSX) file.
-        self.lenght_file = self.file.shape[0]  # Get number of rows.
-        self.file = self.file.to_dict()  # Transform XLSX to a dictionnnary.
-
-
-class Structure:
-    """Structure JSON/CSV/XLSX data lists or dictionnaries."""
-
-    def __init__(self, action: list) -> None:
-        """Make a copy of the readed file and its extension."""
-        self.file = reader.file.copy()  # File data copy.
-        self.extension = reader.extension  # File extension copy.
-        self.action: list = action  # 1, 2 or 1 and 2.
-        if 1 in self.action and 2 not in self.action:
-            from uuid import uuid4  # A Python default import.
-            self.save_file = f'data/{str(uuid4())[:8]}.csv'
-            with open(self.save_file, 'a+', encoding='utf-8') as file:
-                file.write('nft_url;; supply;; blockchain;; type;; price;; '
-                           'method;; duration;; specific_buyer;; quantity')
-
-    def get_data(self, nft_number: int) -> None:
-        """Get NFT's data."""
-        self.nft_number = nft_number
-        # Eval function: self.structure_{FILE_EXTENSION}()
-        eval('self.structure_' + self.extension + '()')
-
-    def structure_json(self) -> None:
-        """Transform JSON dictionnaries list to a whole list."""
-        nft_data = self.file[self.nft_number]  # Get datas of index.
-        # Get key's value from the NFT data.
-        nft_data = [nft_data[data] for data in nft_data]
-        # Take each element in the list and check it.
-        self.structure_data([self.dict_to_list(
-            element) for element in nft_data])  # Then structure data.
-
-    def structure_csv(self) -> None:
-        """Transform CSV file into a list."""
-        # Note: each information is split every ";;", you can change the
-        self.structure_data(self.change_type(  # characters to others.
-            self.file[self.nft_number].split(';;')))
-
-    def structure_xlsx(self) -> None:
-        """Transform XLSX file into a list."""
-        self.structure_data([
-            element.replace('nan', '').strip() if isinstance(element, str) else
-            element for element in self.change_type([self.file[element].get(
-                self.nft_number) for element in self.file])])
-
-    def dict_to_list(self, element: dict or str) -> list or str:
-        """Transform a dictionnary into a list. - JSON file method."""
-        if isinstance(element, list):  # If element is a list.
-            final_list = []  # Final list that will be return.
-            for item in element:  # For each item in this list.
-                temp_list = []  # Store all key's value.
-                if isinstance(item, dict):  # If element is a dict.
-                    # For each key in dict (item), get key's value.
-                    [temp_list.append(item.get(key)) for key in item]
-                else:
-                    temp_list = item  # Do nothing.
-                final_list.append(temp_list)  # Append the temp list.
-            return final_list
-        else:
-            return element  # Return the same element.
-
-    def change_type(self, nft_data: list) -> list:
-        """Change type of element with a literal eval."""
-        from ast import literal_eval  # A Python default import.
-        list_ = []  # List that contains NFT's data.
-        for data in nft_data:  # Get each element of NFT's data.
-            element = str(data).strip()  # Remove whitespaces.
-            try:  # Change type of element (str to int/float/list/bool).
-                # In case of element is an integer, float, list or boolean.
-                list_.append(literal_eval(element))
-            except Exception:  # SyntaxError or ValueError.
-                # In case of element is a real string.
-                list_.append(element)
-        return list_
-
-    def structure_data(self, nft_data: list) -> None:
-        """Structure each data of the NFT in a variable."""
-        # self.nft_data_list = nft_data  # For development.
-        index = 9 if 1 not in self.action else 0
-        if 1 in self.action:  # Upload part.
-            self.file_path: str = os.path.abspath(str(nft_data[0]))
-            self.nft_name: str = str(nft_data[1])  # Set string value to
-            self.link: str = str(nft_data[2])  # real string to prevent
-            self.description: str = str(nft_data[3])  # different types.
-            self.collection: str = str(nft_data[4])
-            self.properties: list = nft_data[5]  # [[type, name], ...].
-            self.levels: list = nft_data[6]  # [[name, from, to], ...].
-            self.stats: list = nft_data[7]  # [[name, from, to], ...].
-            self.unlockable_content: list or bool = nft_data[8]  # [bool, str].
-            self.explicit_and_sensitive_content: bool = nft_data[9]
-            self.supply: int = nft_data[10]
-            self.blockchain: str = str(nft_data[11]).capitalize()
-        if 2 in self.action:  # Sale part.
-            self.type: str = str(nft_data[12 - index]).title()
-            self.price: float or int = nft_data[13 - index]
-            self.method: list = nft_data[14 - index]  # [method, price].
-            self.duration: list or str = nft_data[15 - index]
-            self.specific_buyer: list or bool = nft_data[16 - index]
-            self.quantity: int = nft_data[17 - index]
-        if index != 0:  # Sale only!
-            self.nft_url: str = str(nft_data[0])
-            self.supply: int = nft_data[1]
-            self.blockchain: str = str(nft_data[2]).capitalize()
-
-    def is_empty(self, element: str, data: str, value: str = '') -> bool:
-        """Check if data is empty and input its value."""
-        if data != value:  # Check if the data is not an empty string.
-            web.send_keys(element, data)  # or a default value, and send it.
-            return False
-        return True
-
-    def save_nft(self, url) -> None:
-        """Save the NFT URL, Blockchain and supply number in a file."""
-        # Note: only CSV file will be created.
-        with open(self.save_file, 'a+', encoding='utf-8') as file:
-            file.write(f'\n{url};; {self.supply};; {self.blockchain};;'
-                       ' ;; ;; ;; ;; ;;')  # Complete data manually.
-        print(f'{green}Data saved in {self.save_file}{reset}')
-
-
-class Webdriver:
-    """Webdriver class and methods to prevent exceptions."""
-
-    def __init__(self) -> None:
-        """Contains the file paths of the webdriver and the extension."""
-        # Used files path, change them with your path if necessary.
-        self.webdriver_path = os.path.abspath('assets/chromedriver.exe') if \
-            os.name == 'nt' else os.path.abspath('assets/chromedriver')
-        self.metamask_extension_path = os.path.abspath('assets/MetaMask.crx')
-        self.driver = self.webdriver()  # Start new webdriver.
-
-    def webdriver(self) -> webdriver:
-        """Start a webdriver and return its state."""
-        options = webdriver.ChromeOptions()  # Configure options for Chrome.
-        options.add_extension(self.metamask_extension_path)  # Add extension.
-        options.add_argument("log-level=3")  # No logs is printed.
-        options.add_argument("--mute-audio")  # Audio is muted.
-        driver = webdriver.Chrome(service=Service(  # DeprecationWarning using
-            self.webdriver_path), options=options)  # executable_path.
-        driver.maximize_window()  # Maximize window to reach all elements.
-        return driver
-
-    def clickable(self, element: str) -> None:
-        """Click on an element if it's clickable using Selenium."""
-        try:
-            WDW(self.driver, 10).until(EC.element_to_be_clickable(
-                (By.XPATH, element))).click()
-        except Exception:  # Some buttons need to be visible to be clickable,
-            self.driver.execute_script(  # so JavaScript can bypass this.
-                'arguments[0].click();', self.visible(element))
-
-    def visible(self, element: str, timer: int = 10):
-        """Check if an element is visible using Selenium."""
-        return WDW(self.driver, timer).until(
-            EC.visibility_of_element_located((By.XPATH, element)))
-
-    def send_keys(self, element: str, keys: str) -> None:
-        """Send keys to an element if it's visible using Selenium."""
-        try:
-            self.visible(element).send_keys(keys)
-        except Exception:  # Some elements are not visible but are present.
-            WDW(self.driver, 5).until(EC.presence_of_element_located(
-                (By.XPATH, element))).send_keys(keys)
-
-    def send_date(self, element: str, keys: str) -> None:
-        """Send a date (DD-MM-YYYY HH:MM) to a date input by clicking on it."""
-        self.clickable(element)  # Click first on the element.
-        self.send_keys(element, keys)  # Then send it the date.
-
-    def clear_text(self, element) -> None:
-        """Clear text from an input."""
-        self.clickable(element)  # Click on the element then clear its text.
-        control = Keys.CONTROL if os.name == 'nt' else Keys.COMMAND
-        webdriver.ActionChains(self.driver).key_down(control).perform()
-        webdriver.ActionChains(self.driver).send_keys('a').perform()
-        webdriver.ActionChains(self.driver).key_up(control).perform()
-
-    def window_handles(self, window_number: int) -> None:
-        """Check for window handles and wait until a specific tab is opened."""
-        WDW(self.driver, 30).until(lambda _: len(
-            self.driver.window_handles) >= window_number + 1)
-        # Switch to the asked tab.
-        self.driver.switch_to.window(self.driver.window_handles[window_number])
-
-    def tab_changes(self, tab: int) -> None:
-        """Wait until the tabs list change to continue."""
-        self.window_handles(tab)  # Switch to a tab that will be closed.
-        old_tabs: list = self.driver.window_handles  # Old tabs list.
-        WDW(self.driver, 15).until(  # Wait the tabs lists to be different.
-            lambda _: self.driver.window_handles != old_tabs
-            and len(self.driver.window_handles) == len(old_tabs))
-        self.window_handles(tab)  # Switch to a tab with the same index.
-
-
-class Opensea:
-    """Main class: Opensea automatic uploader."""
-
-    def __init__(self, password: str, recovery_phrase: str) -> None:
-        """Get the password and the recovery_phrase from the text file."""
-        self.recovery_phrase = recovery_phrase  # Get the MetaMask phrase.
-        self.password = password  # Get the new/same password.
-        self.login_url = 'https://opensea.io/login?referrer=%2Fasset%2Fcreate'
-        self.create_url = 'https://opensea.io/asset/create'  # Opensea URLs.
-
-    def metamask_login(self) -> None:
-        """Login to the MetaMask extension."""
-        try:  # Try to login to the MetaMask extension.
-            print('Login to MetaMask.', end=' ')
-            web.window_handles(0)  # Switch to the MetaMask extension tab.
-            web.driver.refresh()  # Reload the page to prevent a blank page.
-            # Click on the "Start" button.
-            web.clickable('//*[@class="welcome-page"]/button')
-            # Click on the "Import wallet" button.
-            web.clickable('//*[contains(@class, "btn-primary")][position()=1]')
-            # Click on the "I agree" button.
-            web.clickable('//footer/button[2]')
-            # Input the recovery phrase.
-            web.send_keys('//input[position()=1]', self.recovery_phrase)
-            # Input a new password or the same password of your account.
-            web.send_keys('//*[@id="password"]', self.password)
-            web.send_keys('//*[@id="confirm-password"]', self.password)
-            # Click on the "I have read and agree to the..." checkbox.
-            web.clickable('(//*[@role="checkbox"])[2]')
-            # Click on the "Import" button.
-            web.clickable('//*[contains(@class, "btn-primary")][position()=1]')
-            # Wait until the login worked and click on the "All done" button".
-            web.visible('//*[contains(@class, "emoji")][position()=1]')
-            web.clickable('//*[contains(@class, "btn-primary")][position()=1]')
-            print(f'{green}Logged to Metamask.{reset}')
-        except Exception:  # Failed - a web element is not accessible.
-            print(f'\n{red}Login to MetaMask failed, retrying...{reset}')
-            self.metamask_login()
-
-    def metamask_contract(self) -> None:
-        """Sign a MetaMask contract to login to Opensea."""
-        # Click on the "Sign" button - Make a contract link.
-        web.clickable('//*[contains(@class, "button btn-secondary")]')
-        try:  # Wait until the MetaMask pop up is closed.
-            WDW(web.driver, 10).until(EC.number_of_windows_to_be(2))
-        except TE:
-            self.metamask_contract()  # Sign the contract a second time.
-        web.window_handles(1)  # Switch back to the Opensea tab.
-
-    def opensea_login(self) -> None:
-        """Login to Opensea using MetaMask."""
-        try:  # Try to login to the Opensea using MetaMask.
-            print('Login to Opensea.', end=' ')
-            web.window_handles(1)  # Switch to the main (data:,) tab.
-            web.driver.get(self.login_url)  # Go to the Opensea login URL.
-            # Click on the "MetaMask" button in list of wallet.
-            web.clickable('//*[contains(text(), "MetaMask")]/../..')
-            web.window_handles(2)  # Switch to the MetaMask pop up tab.
-            # Click on the "Next" button.
-            web.clickable('//*[@class="button btn-primary"]')
-            # Click on the "Connect" button.
-            web.clickable('//*[contains(@class, "button btn-primary")]')
-            web.tab_changes(2)  # Switch to the MetaMask popup tab.
-            self.metamask_contract()  # Sign the contract.
-            # Check if the login worked.
-            WDW(web.driver, 15).until(EC.url_to_be(self.create_url))
-            print(f'{green}Logged to Opensea.{reset}\n')
-        except Exception:  # The contract failed.
-            print(f'{red}Login to Opensea failed. Retrying.{reset}')
-            web.window_handles(1)  # Switch back to the Opensea tab.
-            web.driver.refresh()  # Reload the page (is the login failed?).
-            if web.driver.current_url == self.create_url:
-                try:  # Wait until the MetaMask tab is closed.
-                    WDW(web.driver, 10).until(EC.number_of_windows_to_be(2))
-                except Exception:  # The MetaMask tab cannot be closed.
-                    web.window_handles(1)  # Switch back to the Opensea tab.
-                web.window_handles(2)  # Switch to the MetaMask pop up tab.
-                self.metamask_contract()  # Sign the contract.
-                print(f'Login to Opensea. {green}Logged to Opensea.{reset}\n')
-                return  # Stop exception and start to upload NFTs.
-            self.opensea_login()  # Retry to login to Opensea if it failed.
-
-    def opensea_upload(self, number: int) -> bool:
-        """Upload multiple NFTs automatically on Opensea."""
-        print(f'Uploading NFT n°{number}/{reader.lenght_file}.', end=' ')
-        try:  # Go to the Opensea create URL and input all datas of the NFT.
-            web.driver.get(self.create_url + '?enable_supply=true')
-            if not os.path.exists(structure.file_path):  # Upload the NFT file.
-                raise TE('File doesn\'t exist or path is incorrect.')
-            if os.path.getsize(structure.file_path) / (1024 ** 2) > 100:
-                raise TE('File size must be less than 100 MegaBytes.')
-            if os.path.splitext(structure.file_path)[1][1:].lower() not in \
-                ('jpg', 'jpeg', 'png', 'gif', 'svg', 'mp4',  # Check the file
-                 'webm', 'mp3', 'wav', 'ogg', 'glb', 'gltf'):  # extensions.
-                raise TE('The file extension is not supported on Opensea.')
-            structure.is_empty('//*[@id="media"]', structure.file_path)
-            # Input NFT name.
-            if structure.is_empty('//*[@id="name"]', structure.nft_name):
-                raise TE('The NFT name is missing.')
-            # Input external link.
-            structure.is_empty('//*[@id="external_link"]', structure.link)
-            # Input description.
-            structure.is_empty('//*[@id="description"]', structure.description)
-            if not structure.is_empty(  # Input collection and select it.
-                    '//form/div[5]/div/div[2]/input', structure.collection):
-                try:  # Try to click on the collection button.
-                    collection = ('//span[contains(text(), "'
-                                  f'{structure.collection}")]/../..')
-                    web.visible(collection)  # Check that the collection span
-                    web.clickable(collection)  # is visible and click on it.
-                except Exception:  # If collection doesn't exist.
-                    raise TE('Collection doesn\'t exist or can\'t be found.')
-            datas = [structure.properties, structure.levels, structure.stats]
-            for index in range(len(datas)):  # Add properties, levels & stats.
-                if not len(datas[index]) > 0:  # Check if data is not empty.
-                    continue  # Pass this data because it's empty or null.
-                # Change element from a list of strings to a list of lists.
-                if not isinstance(datas[index][0], list):
-                    datas[index] = [datas[index]]  # Target maybe useless.
-                web.clickable(  # Click on "+" button to open the pop up.
-                    f'//form/section/div[{index + 1}]/div/div[2]/button')
-                number_ = 0
-                for data in datas[index]:
-                    if number_ > 0:  # If there are more than 1 element.
-                        # Click on "Add more" button.
-                        web.clickable('//div[@role="dialog"]/section/button')
-                    number_ += 1  # Increase number to add more element.
-                    web.send_keys(  # Input values in the inputs.
-                        f'/html/body/div[{index + 2}]/div/div/div/section/tabl'
-                        f'e/tbody/tr[{number_}]/td[1]/div/div/input', data[0])
-                    for rank in [3, 2]:  # Input third and second values.
-                        if len(data) == 3 or rank == 2:  # 1 or 2 loops.
-                            actual_element = f'/html/body/div[{index + 2}]' + \
-                                '/div/div/div/section/table/tbody/' + \
-                                f'tr[{number_}]/td[{rank}]/div/div/input'
-                            web.clear_text(actual_element)  # Default text.
-                            web.send_keys(actual_element, data[rank - 1])
-                web.clickable('//footer/button')  # Click on the "Save" button.
-            # Click on the "Unlockable Content" switch if it's true.
-            if isinstance(structure.unlockable_content, list):  # If not False.
-                if len(structure.unlockable_content) > 0:  # Not an empty list.
-                    if isinstance(structure.unlockable_content[0], bool):
-                        if structure.unlockable_content[0]:  # If True.
-                            web.send_keys('//*[@id="unlockable-content-toggle'
-                                          '"]', Keys.ENTER)  # Toggle button.
-                            web.send_keys(  # Input the unlockable content.
-                                '//div[contains(@class, "unlockable")]/'
-                                'textarea', structure.unlockable_content[1])
-            # Click on the "Explicit & Sensitive Content" switch if it's true.
-            if structure.explicit_and_sensitive_content != '':  # Not empty.
-                if isinstance(structure.explicit_and_sensitive_content, bool):
-                    if structure.explicit_and_sensitive_content:  # True.
-                        web.send_keys('//*[@id="explicit-content-toggle"]',
-                                      Keys.ENTER)  # Toggle button.
-            # Set number of supplies if it's not an empty string.
-            if structure.supply != '' and 'supply=' in web.driver.current_url:
-                if isinstance(structure.supply, int):  # Integer.
-                    if structure.supply > 1:  # Set supplies deleting default
-                        web.send_keys('//*[@id="supply"]',  # supply (= 1).
-                                      f'{Keys.BACKSPACE}{structure.supply}')
-            else:  # This is important for the sale part.
-                structure.supply = 1
-            # Set Blockchain if it's different from "Ethereum".
-            if structure.blockchain != '':  # If it's not an empty string.
-                if web.visible('//*[@id="chain"]').get_attribute('value') \
-                        != structure.blockchain:  # Compare to the span text.
-                    try:  # Try to select the Blockchain.
-                        web.clickable('//*[@id="chain"]/..')  # Open the sheet.
-                        web.clickable('//span[contains(text(), '
-                                      f'"{structure.blockchain}")]/../..')
-                    except Exception:  # Blockchain is unknown.
-                        raise TE('Blockchain is unknown or badly written.')
-            else:  # This is important for the sale part.
-                structure.blockchain = 'Ethereum'
-            web.clickable('(//div[contains(@class, "submit")])'  # Click on the
-                          '[position()=1]/div/span/button')  # "Create" button.
-            WDW(web.driver, 30).until(lambda _: web.driver.current_url !=
-                                      self.create_url + '?enable_supply=true')
-            print(f'{green}NFT uploaded.{reset}')
-            if 2 not in structure.action:  # Save the data for future upload.
-                structure.save_nft(web.driver.current_url)
-            return True  # If it perfectly worked.
-        except Exception as error:  # An element is not reachable.
-            print(f'{red}An error occured. {error}\n{tb.print_exc()}{reset}')
-            return False  # If it failed.
-
-    def opensea_sale(self, number: int, date: str = '%d-%m-%Y %H:%M') -> None:
-        """Set a price for the NFT and sell it."""
-        print(f'Sale of the NFT n°{number}/{len(structure.file)}.', end=' ')
-        try:  # Try to sell the NFT with different types and methods.
-            if 2 in structure.action and 1 not in structure.action:
-                web.driver.get(structure.nft_url + '/sell')  # NFT sale page.
-            else:  # The NFT has just been uploaded.
-                web.driver.get(web.driver.current_url + '/sell')  # Sale page.
-            if not isinstance(structure.supply, int):
-                raise TE('The supply number must be an integer.')
-            elif structure.supply == 1 and structure.blockchain == 'Ethereum':
-                if not isinstance(structure.price, int) and not \
-                        isinstance(structure.price, float):
-                    raise TE('The price must be an integer or a float.')
-                if 'Timed' in str(structure.type):  # Timed Auction.
-                    # Click on the "Timed Auction" button.
-                    web.clickable('//i[@value="timelapse"]/../..')
-                    if isinstance(structure.method, list):  # If it's a list.
-                        if len(structure.method) == 2:  # [method, price]
-                            if not isinstance(structure.method[1], int) and \
-                                    not isinstance(structure.method[1], float):
-                                raise TE('Prices must be integer or float.')
-                            if 'declining' in str(structure.method[0]):
-                                web.clickable(  # Click on the method button.
-                                    '//*[@id="main"]/div/div/div[3]/div/div[2]'
-                                    '/div/div[1]/form/div[2]/div/div[2]')
-                                # Click on the "Sell with declining price"
-                                web.clickable('//*[@role="tooltip"]'  # button.
-                                              '/div/div/ul/li/button')
-                                if structure.method[1] < structure.price:
-                                    web.send_keys(  # Input the ending price.
-                                        '//*[@name="endingPrice"]', format(
-                                            structure.method[1], '.8f'))
-                                else:  # Ending price is higher than the price.
-                                    raise TE('The ending price must be higher'
-                                             ' than the starting price.')
-                            elif 'highest' in str(structure.method[0]):
-                                if structure.method[1] > 0:  # Reserve price.
-                                    if structure.method[1] <= 1 or structure \
-                                            .method[1] < structure.price:
-                                        raise TE('Reserve price must be higher'
-                                                 'than 1 WETH and the price.')
-                                    # Click on the "More option" button.
-                                    web.clickable('//button[contains(@class, '
-                                                  '"more-options")]')
-                                    # Click on the "Include reserve price"
-                                    web.send_keys(  # toggle switch button.
-                                        '//*[@role="switch"]', Keys.ENTER)
-                                    web.send_keys(  # Input the reserve price.
-                                        '//*[@name="reservePrice"]',
-                                        format(structure.method[1], '.8f'))
-                            else:  # Not a Declining price or a Highest bidder.
-                                raise TE('Unknown method for Timed Auction.')
-            elif structure.supply > 1:  # Set a quantity of supply.
-                if isinstance(structure.quantity, int):  # Quantity is int.
-                    if structure.quantity <= structure.supply:
-                        web.send_keys('//*[@id="quantity"]',  # Supply to sell.
-                                      f'{Keys.BACKSPACE}{structure.quantity}')
-                    else:  # Quantity number is higher that supply number.
-                        raise TE('Quantity must be less or equal to supplies.')
-            elif structure.blockchain not in ('Ethereum', 'Polygon'):
-                raise TE('Blockchain is unknown or badly written.')
-            if 'Timed' not in str(structure.type):  # Set a specific buyer.
-                if isinstance(structure.specific_buyer, list):
-                    if len(structure.specific_buyer) == 2:
-                        if isinstance(structure.specific_buyer[0], bool):
-                            if structure.specific_buyer[0]:
-                                # Click on the "More option" button.
-                                web.clickable('//button[contains(@cla'
-                                              'ss, "more-options")]')
-                                # Click on "Reserve for specific buyer".
-                                web.send_keys('(//*[@role="switch"])[last()]',
-                                              Keys.ENTER)
-                                web.send_keys(  # Input a specific buyer.
-                                    '//*[@id="reservedBuyerAddressOrEns'
-                                    'Name"]', structure.specific_buyer[1])
-            web.send_keys('//*[@name="price"]', format(structure.price, '.8f'))
-            if isinstance(structure.duration, str):  # Transform to a list.
-                structure.duration = [structure.duration]
-            if isinstance(structure.duration, list):  # List of 1 or 2 values.
-                if len(structure.duration) == 2:  # From {date} to {date}.
-                    from datetime import datetime as dt  # Default import.
-                    # Check if duration is less than 6 months.
-                    if (dt.strptime(structure.duration[1], date) -
-                            dt.strptime(structure.duration[0], date
-                                        )).total_seconds() / 60 > 262146:
-                        raise TE('Duration must be less than 6 months.')
-                    # Check if starting date has passed.
-                    if dt.strptime(dt.strftime(dt.now(), date), date) \
-                            > dt.strptime(structure.duration[0], date):
-                        raise TE('Starting date has passed.')
-                    # Split the date and the time.
-                    start_date, start_time = structure.duration[0].split(' ')
-                    end_date, end_time = structure.duration[1].split(' ')
-                    web.clickable('//*[@id="duration"]')  # Date button.
-                    web.visible(  # Scroll to the pop up frame of the date.
-                        '//*[@role="dialog"]').location_once_scrolled_into_view
-                    web.send_date('//*[@role="dialog"]'  # Ending date.
-                                  '/div[2]/div[2]/div/div[2]/input', end_date)
-                    web.send_date('//*[@role="dialog"]/'  # Starting date.
-                                  'div[2]/div[1]/div/div[2]/input', start_date)
-                    web.send_date('//*[@id="end-time"]', end_time)  # End date.
-                    web.send_date('//*[@id="start-time"]',  # Starting date +
-                                  f'{start_time}{Keys.ENTER}')  # close frame.
-                elif len(structure.duration) == 1:  # In {n} days/week/months.
-                    if structure.duration[0] == '':  # Duration not specified.
-                        raise TE('Duration must be specified.')
-                    if web.visible('//*[@id="duration"]/div[2]').text \
-                            != structure.duration[0]:  # Not default.
-                        web.clickable('//*[@id="duration"]')  # Date button.
-                        web.clickable('//*[@role="dialog"]'  # Duration Range
-                                      '/div[1]/div/div[2]/input')  # sheet.
-                        web.clickable('//span[contains(text(), '   # Date span.
-                                      f'"{structure.duration[0]}")]/../..')
-                        web.send_keys('//*[@role="dialog"]', Keys.ENTER)
-            try:  # Click on the "Complete listing" (submit) button.
-                web.clickable('//button[@type="submit"]')
-            except Exception:  # An unknown error has occured.
-                raise TE('The submit button cannot be clicked.')
-            try:  # Polygon blockchain requires a click on a button.
-                if structure.blockchain == 'Polygon':
-                    web.clickable('//div[@data-testid="Panel"][last()]/div/div'
-                                  '/div/div/button')  # "Sign" button.
-                web.window_handles(2)  # Switch to the MetaMask pop up tab.
-                self.metamask_contract()  # Sign the contract.
-            except Exception:  # No deposit or an unknown error occured.
-                raise TE('You need to make a deposit before proceeding'
-                         ' to listing of your NFTs.')
-            web.window_handles(1)  # Switch back to the Opensea tab.
-            try:  # Wait until the NFT is listed.
-                web.visible('//header/h4')  # "Your NFT is listed!".
-                print(f'{green}NFT put up for sale.{reset}')
-            except Exception:  # An error occured while listing the NFT.
-                raise TE('The NFT is not listed.')
-        except Exception as error:  # Failed, an error has occured.
-            print(f'{red}NFT sale cancelled. {error}\n{tb.print_exc()}{reset}')
-
-
-def read_file(file_: str, question: str) -> str:
-    """Read file or ask for data to write in text file."""
-    if not os.path.isfile(f'assets/{file_}.txt'):
-        open(f'assets/{file_}.txt', 'a')  # Create a file if it doesn't exist.
-    with open(f'assets/{file_}.txt', 'r+', encoding='utf-8') as file:
-        text = file.read()  # Read the file.
-        if text == '':  # If the file is empty.
-            text = input(question)  # Ask the question.
-            if input(f'Do you want to save your {file_} in '
-                     'a text file? (y/n) ').lower() != 'y':
-                print(f'{yellow}Not saved.{reset}')
-            else:
-                file.write(text)  # Write the text in file.
-                print(f'{green}Saved.{reset}')
-        return text
-
-
-def perform_action() -> list:
-    """Suggest multiple actions to the user."""
-    text_list = [f'{yellow}\nChoose an action to perform:{reset}',
-                 '1 - Upload and sell NFTs (18 details/NFT).',
-                 '2 - Upload NFTs (12 details/NFT).', '3 - Sell '
-                 'NFTs (9 details/NFT including 3 autogenerated).']
-    action = [[1, 2], [1], [2]]
-    while True:
-        [print(string) for string in text_list]
-        number = input('Action number: ')
-        if number.isdigit():  # Check if answer is a number.
-            if int(number) > 0:
-                return action[int(number) - 1]
-        print(f'{red}Answer must be a strictly positive integer.{reset}')
-
-
-def data_file() -> str:
-    """Read the data folder and extract JSON, CSV and XLSX files."""
-    while True:
-        file_number, files_list = 0, []
-        print(f'{yellow}\nChoose your file:{reset}\n0 - Browse a file on PC.')
-        for files in [glob(f'data/{extension}')  # Files of the data folder.
-                      for extension in ['*.json', '*.csv', '*.xlsx']]:
-            for file in files:
-                file_number += 1
-                files_list.append(file)
-                print(f'{file_number} - {os.path.abspath(file)}')
-        answer = input('File number: ')
-        cls()  # Clear console.
-        if not answer.isdigit():  # Check if answer is a number.
-            print(f'{red}Answer must be an integer.{reset}')
-        elif int(answer) == 0:  # Browse a file on PC.
-            print(f'{yellow}Browsing on your computer...{reset}')
-            from tkinter import Tk  # Tkinter module: pip install tk
-            from tkinter.filedialog import askopenfilename
-            Tk().withdraw()  # Hide Tkinter tab.
-            return askopenfilename(filetypes=[('', '.json .csv .xlsx')])
-        elif int(answer) <= len(files_list):
-            return files_list[int(answer) - 1]  # Return path of file.
-        print(f'{red}File doesn\'t exist.{reset}')
-
-
+#GLOBAL FUNCTIONS
 def cls() -> None:
     """Clear console function."""
     # Clear console for Windows using 'cls' and Linux & Mac using 'clear'.
     os.system('cls' if os.name == 'nt' else 'clear')
 
+def read_file(file_: str, question: str) -> str:
+    """Read file or ask for data to write in text file."""
+    if not os.path.isfile(f'assets/{file_}.txt'):
+        open(f'assets/{file_}.txt', 'a')
+    with open(f'assets/{file_}.txt', 'r+', encoding='utf-8') as file:
+        text = file.read()
+        if text == '':
+            text = input(question)
+            if input(f'Do you want to save your {file_} in'
+                     ' text file? (y/n) ').lower() == 'y':
+                file.write(text)
+                print(f'{green}Saved.{reset}')
+            else:
+                print(f'{yellow}Not saved.{reset}')
+        return text
 
-def exit(message: str = '') -> None:
-    """Stop running the program using the sys module."""
-    import sys
-    sys.exit(f'{red}{message}{reset}')
+def grabJson(file: str) -> None:
+    """Open Settings JSON file and read it."""
+    from json import loads
+    file = loads(open(file, encoding='utf-8').read())['nft']
+    return file
 
+def type_parameters(parameters: list, _range: int) -> list:
+        """Change element's type of some parameters."""
+        if len(parameters) > 0:
+            if type(parameters[0]) == list:
+                for parameter in range(len(parameters)):
+                    for element in range(_range):
+                        parameters[parameter][element] = \
+                            str(parameters[parameter][element])
+            else:
+                for element in range(_range):
+                    str1 = parameters
+                    list1 = list(str1)
+                    answer = list1
+                    parameters = str(answer) 
+        return parameters
 
-if __name__ == '__main__':
+def create_parameters(parametersA: list, jsonData: list) -> None:
+        """Create parameters."""
+        parametersB = parametersA
+        filezC = jsonData
+        # Upload:
+        file_path = str(filezC[0]) 
+        nft_name = str(filezC[1])
+        external_link = filezC[2]
+        description = str(filezC[3])
+        collection = str(filezC[4])
+        properties = type_parameters(
+            parametersB, 2)  # [[type, name], ...]
+        # This is where you enter the names of the properties from the NFTs
+        # if you change the number of properties, you'll also need to reorder the 
+        # integers in the array for each property (the number between the square brackets)... 
+        # i.e. if you don't need 14 or 15 different properties and delete some, 
+        # just make sure that you they still go in order and catch all the data 
+        # from the Json files, matching the names of the paramaters in the Json files as well. 
+        background = properties[0]
+        subject = properties[1]
+        shine = properties[2]
+        eyes = properties[3]
+        teeth = properties[4]
+        mustache = properties[5]
+        backOfHead = properties[6]
+        lazerEyes = properties[7]
+        flammability = properties[8]
+        rays = properties[9]
+        glasses = properties[10]
+        nose = properties[11]
+        hat = properties[12]
+        frontText = properties[13]
+        backText =properties[14]
+        #Levels and Stats will need to be added later, as needed.
+        unlockable_content: list = filezC[6]  # [bool, text]
+        explicit_and_sensitive_content: bool = filezC[7]
+        supply: int = filezC[8]
+        blockchain: str = filezC[9]
+        # Sell:
+        type: str = filezC[10]
+        price: int = filezC[11]
+        duration: list = filezC[12]
+        specific_buyer: list = filezC[13]
+        quantity: int = filezC[14]
+        # Builds a final array using values constructed above, to be returned in the line after 
+        finalDataList = [file_path, nft_name, external_link, description, collection, [background[0], background[1], subject[0], subject[1], shine[0], shine[1], eyes[0], eyes[1], teeth[0], teeth[1], mustache[0], mustache[1], backOfHead[0], backOfHead[1], lazerEyes[0], lazerEyes[1], flammability[0], flammability[1], rays[0], rays[1], glasses[0], glasses[1], nose[0], nose[1], hat[0], hat[1], frontText[0], frontText[1], backText[0], backText[1]], unlockable_content, explicit_and_sensitive_content, supply, blockchain, type, price, duration, specific_buyer, quantity]
+        return finalDataList
 
-    cls()  # Clear console.
+def get_nft(nft: int) -> None:
+        """Get all settings of NFT."""
+        nftNum = nft
+        finalParamsList = json_file(nftNum)
+        return finalParamsList
 
-    print(f'{green}Made by Maxime. '
-          f'\n@Github: https://github.com/maximedrn{reset}')
+def json_file(nft: int) -> None:
+        """Transform JSON list/dict to a whole list."""
+        from json import dumps
+        filez = grabJson(files[nft])
+        filezB = dict_checker(filez)
+        filezB = filezB[0]
+        # filezB at this point holds all the Json data in a list, 
+        # where the data can be pulled by calling filezB[i] 
+        params = filezB[5]
+        nft_settings = dict_checker(params)
+        nft_settings = nft_settings
+        # Get key's value from the NFT data.
+        _list = []  # Init a new list.
+        for element in nft_settings:  # Take each element in list.
+            _list.append(dict_checker(element))  # Check element.
+        # Create parameters from list.
+        paramsList = create_parameters(_list, filezB)
+        return paramsList
+        
+def dict_checker(element):
+        """Check if element is a dict or not."""
+        if type(element) == list:  # If element is a list.
+            final_list = []  # Final list that will be return.
+            for item in element:  # For each item in this list.
+                temp_list = []  # Store all key's value.
+                if type(item) == dict:  # If element is a dict.
+                    for key in item:  # For each key in dict (item).
+                        temp_list.append(item.get(key))  # Get key's value.
+                else:
+                    temp_list = item  # Do nothing.
+                final_list.append(temp_list)  # Append each temp list.
+            return final_list
+        else:
+            return element  # Else return the same element.
 
-    # Init the Opensea class and send the password and the recovery phrase.
-    opensea = Opensea(
-        read_file('password', '\nWhat is your MetaMask password? '), read_file(
-            'recovery_phrase', '\nWhat is your MetaMask recovery phrase? '))
+class Opensea(object):
+    """Main class of Opensea automatic uploader."""
 
-    action = perform_action()  # What the user wants to do.
-    reader = Reader(data_file())  # Ask for a file and read it.
-    structure = Structure(action)  # Init the Structure class to order data.
-    web = Webdriver()  # Start a new webdriver and init its methods.
-    opensea.metamask_login()  # Connect to MetaMask.
-    opensea.opensea_login()  # Connect to Opensea.
+    def __init__(self, password: str, recovery_phrase: str) -> None:
+        """Get the password and the recovery_phrase from the text file."""
+        # Get recovery phrase of MetaMask wallet.
+        self.recovery_phrase = recovery_phrase
+        self.password = password  # Get new password.
+        # Used files path.
+        self.webdriver_path = 'assets/chromedriver.exe'
+        self.metamask_extension_path = 'assets/MetaMask.crx'
+        self.driver = self.webdriver()  # Start new webdriver.
+        # Opensea URLs.
+        self.login_url = 'https://opensea.io/login?referrer=%2Fasset%2Fcreate'
+        self.create_url = 'https://opensea.io/asset/create'
 
-    for nft_number in range(reader.lenght_file):
-        structure.get_data(nft_number)  # Structure the data of the NFT.
-        upload = None  # Prevent Undefined value error.
-        if 1 in action:  # 1 = Upload. If user wants to upload the NFT.
-            upload = opensea.opensea_upload(nft_number + 1)  # Upload the NFT.
-        if 2 in action:  # 2 - Sale. If user wants to sell the NFT.
-            if 1 in action and not upload:  # Do not upload the NFT because of
-                continue  # a user choice or a failure of the upload.
-            elif isinstance(structure.price, int) or \
-                    isinstance(structure.price, float):
-                if structure.price > 0:  # If price has been defined.
-                    opensea.opensea_sale(nft_number + 1)  # Sell NFT.
+    def webdriver(self):
+        """Start webdriver and return state of it."""
+        options = webdriver.ChromeOptions()  # Configure options for Chrome.
+        options.add_extension(self.metamask_extension_path)  # Add extension.
+        # Uncomment out the line below if you'd rather selenium runs in 'Headless' mode
+        # options.add_argument("headless")  # Headless ChromeDriver. (COMMENTED OUT BY DEFAULT)
+        options.add_argument("log-level=3")  # No logs is printed.
+        options.add_argument("--mute-audio")  # Audio is muted.
+        driver = webdriver.Chrome(self.webdriver_path, options=options)
+        driver.maximize_window()  # Maximize window to reach all elements.
+        return driver
 
-    web.driver.quit()  # Stop the webdriver.
-    print(f'\n{green}All done! Your NFTs have been uploaded/sold.{reset}')
+    def element_clickable(self, element: str) -> None:
+        """Click on element if it's clickable using Selenium."""
+        try:
+            WDW(self.driver, 60).until(EC.element_to_be_clickable(
+                (By.XPATH, element))).click()
+        except ECIE:
+            # Sometimes the element is not clickable.
+            self.driver.execute_script(
+                "arguments[0].click();",
+                self.driver.find_element(By.XPATH, element))
+
+    def element_visible(self, element: str, timer: int = 30):
+        """Check if element is visible using Selenium."""
+        return WDW(self.driver, timer).until(EC.visibility_of_element_located(
+            (By.XPATH, element)))
+
+    def element_send_keys(self, element: str, keys: str) -> None:
+        """Send keys to element if it's visible using Selenium."""
+        try:
+            WDW(self.driver, 5).until(EC.visibility_of_element_located(
+                (By.XPATH, element))).send_keys(keys)
+        except TE:
+            # Some elements are not visible but are still present.
+            WDW(self.driver, 5).until(EC.presence_of_element_located(
+                (By.XPATH, element))).send_keys(keys)
+
+    def clear_text(self, element) -> None:
+        """Clear text from input."""
+        self.element_clickable(element)
+        webdriver.ActionChains(self.driver).key_down(Keys.CONTROL).perform()
+        webdriver.ActionChains(self.driver).send_keys('a').perform()
+        webdriver.ActionChains(self.driver).key_up(Keys.CONTROL).perform()
+
+    def window_handles(self, window_number: int) -> None:
+        """Check for window handles and wait until a specific tab is opened."""
+        wait = 0
+        while True:
+            # If asked tab is opened.
+            sleep(.5)
+            if len(self.driver.window_handles) == window_number + 1:
+                return True
+            elif wait == 10:
+                return False
+            wait += 1
+
+    def metamask(self) -> None:
+        """Login to MetaMask extension."""
+        print('Login to MetaMask extension.', end=' ')
+        # Switch to MetaMask extension's tab.
+        self.driver.switch_to.window(self.driver.window_handles[0])
+        # Refresh MetaMask extension's tab while extension is not loaded.
+        while True:
+            # If page is fully loaded.
+            if 'initialize' in self.driver.current_url:
+                break
+            self.driver.refresh()  # Reload page.
+            sleep(1)  # Wait 1 second.
+        # Click on "Start" button.
+        self.element_clickable(
+            '//*[@id="app-content"]/div/div[3]/div/div/div/button')
+        # Click on "Import wallet" button.
+        self.element_clickable('//*[@id="app-content"]/div/div[3]/div/div/'
+                               'div[2]/div/div[2]/div[1]/button')
+        # Click on "I agree" button.
+        self.element_clickable('//*[@id="app-content"]/div/div[3]/div/div/'
+                               'div/div[5]/div[1]/footer/button[2]')
+        # Input recovery phrase.
+        self.element_send_keys('//*[@id="app-content"]/div/div[3]/div/div/'
+                               'form/div[4]''/div[1]/div/input',
+                               self.recovery_phrase)
+        # Input new password.
+        self.element_send_keys('//*[@id="password"]', self.password)
+        self.element_send_keys('//*[@id="confirm-password"]', self.password)
+        # Check "I have read and agree to the..." checkbox.
+        self.element_clickable(
+            '//*[@id="app-content"]/div/div[3]/div/div/form/div[7]/div')
+        # Click on "Import" button.
+        self.element_clickable(
+            '//*[@id="app-content"]/div/div[3]/div/div/form/button')
+        # Click on "All done" button.
+        self.element_clickable(
+            '//*[@id="app-content"]/div/div[3]/div/div/button')
+        print(f'{green}Logged to Metamask extension.{reset}')
+
+    def opensea_login(self) -> None:
+        """Login to Opensea using Metamask."""
+        print('Login to Opensea.', end=' ')
+        self.driver.switch_to.window(self.driver.window_handles[1]) \
+            if self.window_handles(1) else self.retry_login(0)
+        self.driver.get(self.login_url)  # Go to Opensea login URL.
+        # Click on "Metamask" button in list of wallet.
+        ul = len(self.element_visible(
+            '//*[@id="__next"]/div[1]/main/div/div/div/div[2]/ul'
+        ).find_elements(By.TAG_NAME, 'li'))
+        for li in range(ul):
+            li += 1  # Add 1 to start li element at li[1].
+            # Check if button text contains "MetaMask".
+            if self.element_visible(
+                    '//*[@id="__next"]/div[1]/main/div/div/div/div[2]/ul/li'
+                    f'[{li}]/button/div[2]/span').text == 'MetaMask':
+                # Click on Metamask button.
+                self.element_clickable('//*[@id="__next"]/div[1]/main/div/div'
+                                       f'/div/div[2]/ul/li[{li}]/button')
+                break
+        # Switch on MetaMask popup tab.
+        self.driver.switch_to.window(self.driver.window_handles[2]) \
+            if self.window_handles(2) else self.retry_login(0)
+        # Click on "Next" button.
+        self.element_clickable('//*[@id="app-content"]/div/div[3]/div/'
+                               'div[2]/div[4]/div[2]/button[2]')
+        # Click on "Connect" button.
+        self.element_clickable('//*[@id="app-content"]/div/div[3]/div/'
+                               'div[2]/div[2]/div[2]/footer/button[2]')
+        self.metamask_sign()
+        # Reload page and retry to log in to Opensea if failed.
+        try:
+            WDW(self.driver, 60).until(EC.url_to_be(self.create_url))
+            print(f'{green}Logged to Opensea.{reset}\n')
+        except TE:
+            self.retry_login()
+
+    def metamask_sign(self) -> None:
+        """Metamask confirm connection."""
+        # Switch on MetaMask popup tab.
+        self.driver.switch_to.window(self.driver.window_handles[2]) \
+            if self.window_handles(2) else self.retry_login(0)
+        # Click on "Sign" button.
+        self.element_clickable(
+            '//*[@id="app-content"]/div/div[3]/div/div[3]/button[2]')
+        # Switch back to Opensea tab.
+        self.driver.switch_to.window(self.driver.window_handles[1]) \
+            if self.window_handles(1) else self.retry_login(0)
+
+    def retry_login(self, value: int = 1) -> None:
+        """Retry to log in to Opensea after an error occured."""
+        print(f'{red}Failed to login to Opensea, Retrying.{reset}')
+        if value == 0:
+            self.opensea_login()
+        else:
+            self.metamask_sign()
+
+    def opensea_upload(self, number: int) -> None:
+        """Upload multiple NFTs automatically on Opensea."""
+        try:
+            # Go to Opensea login URL.
+            self.driver.get(self.create_url + '?enable_supply=true')
+            # Upload NFT file.
+            if not os.path.exists(paramsList[0]) \
+                    or paramsList[0] == '':
+                raise TE('File doesn\'t exist.')
+            self.element_send_keys('//*[@id="media"]', paramsList[0])
+            # Input NFT name.
+            if paramsList[1] == '':
+                raise TE('Missing NFT Name.')
+            self.element_send_keys('//*[@id="name"]', paramsList[1])
+            # Input external link.
+            if paramsList[2] != '':
+                self.element_send_keys(
+                    '//*[@id="external_link"]', paramsList[2])
+            # Input description.
+            if paramsList[3] != '':
+                self.element_send_keys(
+                    '//*[@id="description"]', paramsList[3])
+            # Input collection and select it.
+            if paramsList[4] != '':
+                self.element_send_keys(
+                    '//*[@id="__next"]/div[1]/main/div/div/section/div/form/'
+                    'div[5]/div/div[2]/input', paramsList[4])
+                try:
+                    self.element_clickable(
+                        '//*[contains(@id, "tippy")]/div/div/div/ul/li/button')
+                except Exception:
+                    raise TE('Collection doesn\'t exist')
+            # Add properties, levels and stats.
+            parameters = attributes
+            print(f'len(parameters) // 2: {len(parameters) // 2}')
+            totalParams = len(parameters) // 2
+            for index in range(0, 1):
+                if len(parameters) > 0:
+                    self.element_clickable(
+                        '//*[@id="__next"]/div[1]/main/div/div/section/div/'
+                        f'form/section/div[{index + 1}]/div/div[2]/button')
+                    parameter = 0
+                    paramsIndex = 0
+                    for element in range(0, totalParams):
+                        if totalParams > 0:
+                            self.element_clickable(
+                                f'/html/body/div[{index + 2}]/div/div/div/'
+                                'section/button')
+                        parameter += 1
+                        self.element_send_keys(
+                            f'/html/body/div[{index + 2}]/div/div/div/section/'
+                            f'table/tbody/tr[{parameter}]/td[1]/div/div/input',
+                            parameters[paramsIndex])
+                        actual_element = (
+                            f'/html/body/div[{index + 2}]/div/div/div/section/'
+                            f'table/tbody/tr[{parameter}]/td[2]/div/div/input')
+                        self.clear_text(actual_element)
+                        self.element_send_keys(actual_element, parameters[paramsIndex + 1])
+                        paramsIndex = paramsIndex + 2
+                    # Click on "Save" button.
+                    self.element_clickable(f'/html/body/div[{index + 2}]/div'
+                                        '/div/div/footer/button')
+            # Set number of supply.
+            if paramsList[8] != '' and type(paramsList[8]) == int:
+                if '?enable_supply=true' in self.driver.current_url \
+                        and paramsList[8] > 1:
+                    # Set supply modifying value.
+                    self.driver.execute_script(
+                        f'arguments[0].value = {paramsList[8]};',
+                        self.element_visible('//*[@id="supply"]'))
+            # Set Blockchain.
+            if paramsList[9] != '':
+                blockchain = self.element_visible('//*[@id="chain"]')
+                if blockchain.get_attribute('value') != paramsList[9]:
+                    # Click on bottom sheet.
+                    self.element_clickable(
+                        '//*[@id="__next"]/div[1]/main/div/div'
+                        '/section/div/form/div[7]/div/div[2]')
+                    # Get lenght of elements list.
+                    ul = len(self.element_visible(
+                        '//*[@id="tippy-9"]/div/div/div/ul'
+                    ).find_elements(By.TAG_NAME, 'li'))
+                    # Find Blockchain in list.
+                    for li in range(ul):
+                        li += 1  # Add 1 to start li element at li[1].
+                        # Check if span text contains Blockchain.
+                        if self.element_visible(
+                            f'//*[@id="tippy-9"]/div/div/div/ul/li[{li}]'
+                            '/button/div[2]/span[1]').text \
+                                == paramsList[9]:
+                            # Click on specific Blockchain button.
+                            self.element_clickable('//*[@id="tippy-9"]/div/div'
+                                                   f'/div/ul/li[{li}]/button')
+                            break
+            # Click on "Create" button.
+            self.element_clickable('//*[@id="__next"]/div[1]/main/div/div/'
+                                   'section/div/form/div/div[1]/span/button')
+            sleep(7)
+            # Check if done.
+            self.element_visible('/html/body/div[5]/div/div/div/div[1]', 30)
+            WDW(webdriver, timeout=2)
+            sleep(3)
+            print(f'{green}Done.{reset}')
+            # If price has been defined.
+            print('Selling NFT.', end=' ')
+            if paramsList[11] > 0:
+                self.sell_nft()  # Sell NFT.
+            else:
+                print(f'{red}NFT sale cancelled.{reset}')
+        except TE as error:
+            print(f'{red}Failed: {error}{reset}')
+
+    def sell_nft(self) -> None:
+        """Set a price for the NFT, etc."""
+        try:
+            # Get sell page for the NFT.
+            self.driver.get(self.driver.current_url + '/sell')
+            self.element_send_keys(
+                    '//input[@name="price"]', str(paramsList[11]))
+            # Click on "Create" button.
+            self.element_clickable('//button[@type="submit"]')
+            self.element_clickable('//button[@class="Blockreact__Block-sc-1xf18x6-0 Buttonreact__StyledButton-sc-glfma3-0 bhqEJb fzwDgL"]')
+            sleep(.5)
+            WDW(webdriver, timeout=1)       
+            # Sign Metamask 
+            self.metamask_sign()
+            WDW(webdriver, timeout=10)
+            sleep(3)
+            # click 'x' icon to close the popup and bring up the page for the NFT that was just listed
+            self.element_clickable('//button[@class="UnstyledButtonreact__UnstyledButton-sc-ty1bh0-0 btgkrL"]')
+            sleep(3)
+            WDW(webdriver, timeout=20)
+            #grabs URL of the NFT you just minted and listed
+            justListedNftUrl = self.driver.current_url
+            WDW(webdriver, timeout=1)
+            sleep(1)
+            self.element_clickable('//*[@id="__next"]/div[1]/main/div/div/div[2]/div[1]/div/div[1]/div[1]/article/header/div[2]/i')
+            #generate NFT base number and store in variable to pass through to dictionary 
+            #(if your NFT name doesn't end with a number, then the next 3 lines of code may not work as designed)
+            baseNftNumber = paramsList[1]
+            # Get last 6 characters
+            lastChars = baseNftNumber[-6:]
+            lastChars = int(lastChars)
+            #Get current directory path
+            cwd = os.getcwd()
+            # Generate a Json object to be saved in the /OutputJson folder 
+            # for later use with upcoming automated social media uploader
+            dictionary ={
+                "image_path" : paramsList[0],
+                "nft_name" : paramsList[1],
+                "main_site_url" : paramsList[2],
+                "nft_description" : paramsList[3],
+                "collection_name" : paramsList[4],
+                "properties" : paramsList[5],
+                "unlockable_content" : paramsList[6],
+                "explicit_sensitive_content" : paramsList[7],
+                "supply" : paramsList[8],
+                "blockchain" : paramsList[9],
+                "sale_type" : paramsList[10],
+                "nft_price" : paramsList[11],
+                "duration" : paramsList[12],
+                "specific_buyer" : paramsList[13],
+                "quantity_sold" : paramsList[14],
+                "base_nft_number" : lastChars,
+                "collection_link" : "*****CHANGE THIS STRING TO THE URL OF YOUR NFT COLLECTION*****",
+                "nft_link" : justListedNftUrl,
+                "tags" : ["AddYourTagsHere", "TagsGoHere", "KurtAtWork", "NFT", "NFTs", "OpenSea", "Blockchain", "Like", "Follow", "Share", "Subscribe", "NFTArtist", "NFTCollectors", "LetsGoBrandonNFT" ]               
+            }
+            # Serializing json 
+            json_object = json.dumps(dictionary, indent = 4)
+            # Writing to {lastChars}.json
+            with open(cwd + "/outputJson/" + str(lastChars) + ".json", "w") as outfile:
+                outfile.write(json_object)
+            print(f'')
+            print(f'{green}successfully wrote {lastChars}.json file.')
+            sleep(1)
+            print(f'{green}NFT put up for sale.{reset}')
+        except TE as error:
+            print(f'{red}NFT sale cancelled: {error}{reset}')
+#starting variables
+folder = [glob(f'data/{extension}')
+            for extension in ['*.json']]
+files = []
+# quick loop that grabs all the file extensions and puts them in the files array
+for extension in folder:
+    for file in extension:
+        files.append(file)
+len_file = len(files)  # Length of file.
+#initialization
+print(f'{green}-------------------------------------------------------------------------------------------')
+print(f"")
+print(f'{green}Frankensteined together by Kurt At Work. '
+          f'\n@Github: https://github.com/kurtatwork{reset}')
+print(f"")
+print(f"{green}Check out my NFT's on OpenSea")
+print(f"{green}https://opensea.io/Kurt_At_Work")
+print(f"")
+print(f"{green}If you appreciate my work, consider donating to my MetaMask:")
+print(f"{green}0x8736Ee29F772B9A972547C228a5F43E427E783AE")
+print(f"""{green}   __ __         __    ___  __    _      __         __  
+  / //_/_ ______/ /_  / _ |/ /_  | | /| / /__  ____/ /__
+ / ,< / // / __/ __/ / __ / __/  | |/ |/ / _ \/ __/  '_/
+/_/|_|\_,_/_/  \__/ /_/ |_\__/   |__/|__/\___/_/ /_/\_\ 
+                                                        """)
+print(f'-------------------------------------------------------------------------------------------')
+print(f'')
+password = read_file('password', '\nWhat is your MetaMask password? ')
+recovery_phrase = read_file('recovery_phrase', '\nWhat is your MetaMask recovery phrase? ')
+upload = Opensea(password, recovery_phrase) 
+upload.metamask()
+sleep(.5)
+upload.opensea_login()
+sleep(.5)
+for elements in range(len_file):
+        paramsList = get_nft(elements)
+        attributes = paramsList[5]
+        print(f'')
+        print(f'Uploading NFT n° {elements + 1}/{len_file} : {paramsList[1]}')
+        upload.opensea_upload(elements)  # Upload it.
+        print(f'-------------------------------------------------------------------------------------------')     
+print(f'')
+print(f"{red}Please check the messages of this console to ensure NFT's properly Minted, Listed, and Json files created")
+print(f"{red}Also, double check your OpenSea collection as well, to ensure that all NFT's uploaded correctly, no repeats, etc.")
+print(f'')
+print(f"{green}All {len_file} of the NFT's have been processed.")
+print(f'')

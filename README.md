@@ -1,24 +1,36 @@
+# KurtAtWork-OpenSea-Automatic-Uploader version-1.0.0                                                          
+
+Hey everyone, I forked a copy of another Auto-Uploader that I downloaded from a github repo. Former code had issues uploading multiple NFTs (i could only get it to mint and list ONE NFT no matter what i did to the code to change it, tried many many changes), also there were issues with actually listing them (former code only had a comment at the line where the sale was supposed to happen saying 'Do this'), and other problems. 
+
+after weeks of trying to get it to upload more than one NFT at a time and having zero success, I ended up giving up on modifying the old code and decided to rewrite the entire thing from the ground up and using a few bits and pieces from the old code that actually worked. 
+
+Anyway, here it is... it only works with Json files currently because that's what i needed. This project was built more around my own needs and is uploaded to this repo in that way as well... 
+
+its not really designed to be the most user friendly or fully featured, its just a wham-bam-thankyou-ma'am sorta Git'er Done kinda project. 
+
+Changes might come down the road, but for the time being, if you're using multiple json files to upload this will work for you.
+
 # Automatically upload your NFTs on Opensea using Python Selenium.
 
-* **(_Version 1.4.2 - January 05, 2022_).**
-* Sign up on [Opensea](https://opensea.io/?ref=0xDD135d5be0a23f6daAAE7D2d0580828c9e09402E) (Affiliate link).
+* **(_Version 1.0.0 - January 05, 2022_).**
+* Sign up on [Opensea](https://opensea.io/?ref=0x8736ee29f772b9a972547c228a5f43e427e783ae) (Affiliate link).
 * Sign up on [MetaMask](https://metamask.io/).
 
 
 # Table of contents
 
-* **[What does this bot do?](https://github.com/maximedrn/opensea_automatic_uploader#what-does-this-bot-do)**
-* **[Changelog](https://github.com/maximedrn/opensea_automatic_uploader#changelog).**
-* **[To do list](https://github.com/maximedrn/opensea_automatic_uploader#to-do-list).**
-* **[Instructions](https://github.com/maximedrn/opensea_automatic_uploader#instructions)**.
-  * [Basic installation of Python for beginners](https://github.com/maximedrn/opensea_automatic_uploader#basic-installation-of-python-for-beginners).
-  * [Configuration of the bot](https://github.com/maximedrn/opensea_automatic_uploader#configuration-of-the-bot).
-* **[Data files structure](https://github.com/maximedrn/opensea_automatic_uploader#data-files-structure).**
-  * [Upload and sale](https://github.com/maximedrn/opensea_automatic_uploader#upload-and-sale).
-  * [Upload only](https://github.com/maximedrn/opensea_automatic_uploader#upload-only).
-  * [Sale only](https://github.com/maximedrn/opensea_automatic_uploader#sale-only).
-* **[Configuration of the sales part of the NFTs](https://github.com/maximedrn/opensea_automatic_uploader#configuration-of-the-sales-part-of-the-nfts).**
-* **[Known issues and important things to know](https://github.com/maximedrn/opensea_automatic_uploader#known-issues-and-important-things-to-know).**
+* **[What does this bot do?](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader#what-does-this-bot-do)**
+* **[Changelog](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader#changelog).**
+* **[To do list](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader#to-do-list).**
+* **[Instructions](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader#instructions)**.
+  * [Basic installation of Python for beginners](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader#basic-installation-of-python-for-beginners).
+  * [Configuration of the bot](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader#configuration-of-the-bot).
+* **[Data files structure](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader#data-files-structure).**
+  * [Upload and sale](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader#upload-and-sale).
+  * [Upload only](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader#upload-only).
+  * [Sale only](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader#sale-only).
+* **[Configuration of the sales part of the NFTs](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader#configuration-of-the-sales-part-of-the-nfts).**
+* **[Known issues and important things to know](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader#known-issues-and-important-things-to-know).**
 
 
 ## What does this bot do?
@@ -27,37 +39,15 @@ This script allows you to upload and sell **as many NFTs as you want to Opensea*
 
 **You can decide whether you want to upload or sell your NFTs, or both**. If you upload your NFTs and sell them later, a CSV file is created with the URL of the NFT as well as its Blockchain and supply number.
 
-➜ **If you sell any NFT with this bot, you can consider sharing some of your earnings**: 😉
-**0xDD135d5be0a23f6daAAE7D2d0580828c9e09402E** (Ethereum).  
-➜ **Or you can buy me a NFT from my collection [Crypto Parrot](https://opensea.io/collection/crypto-parrot-nfts) if this bot was useful to you**.
-
+➜ **Feel free to help support the dev of this github repo if it has helped you out in your NFT journey and you feel like giving back (THANK YOU)**:
+**0x8736ee29f772b9a972547c228a5f43e427e783ae** (Ethereum).
+➜ **Check out one of my collections on OpenSea if you feel like it [Kurt At Work](https://opensea.io/collection/selected-works-kurt-at-work)**.
+➜ **Check out another of my collections on OpenSea if you feel like it [SeaSlug Called Jamulous](https://opensea.io/collection/a-sea-slug-called-jamulous)**.
+➜ **Check out yet another one of my collections on OpenSea if you feel like it [Let's Go Brandon NFT](https://opensea.io/collection/letsgobrandon-nft)**.
 
 ## Changelog
 
-* **Version 1.4.2:**
-  * Listing of NFT on the Ethereum Blockchain is fully supported. **Be sure to make a deposit and have more than 0.05 ETH on your wallet.**
-* **Version 1.4.1:**
-  * Small fix for XLSX files. Empty cells were interpreted as "NaN", which is not interpreted as an empty string for Python. **[#18](https://github.com/maximedrn/opensea_automatic_uploader/issues/18), [#23](https://github.com/maximedrn/opensea_automatic_uploader/issues/23)**.
-* **Version 1.4:**
-  * You can now decide whether you want to upload or sell your NFTs, or both. **[#3](https://github.com/maximedrn/opensea_automatic_uploader/issues/3), [#22](https://github.com/maximedrn/opensea_automatic_uploader/issues/22)**.
-  * Signing the MetaMask contract works every time. It can take 30 seconds to be signed when connecting to Opensea. **[#5](https://github.com/maximedrn/opensea_automatic_uploader/issues/5), [#17](https://github.com/maximedrn/opensea_automatic_uploader/issues/17)**.
-  * After uploading the NFT, the bot would crash when it tried to sell it (the URL was not correct). Now it doesn't. **[#17](https://github.com/maximedrn/opensea_automatic_uploader/issues/17)**.
-  * MacOS and Linux support improved.
-  * Calendar method improved.
-* **Version 1.3:**
-  * Important fixes. **[#4](https://github.com/maximedrn/opensea_automatic_uploader/issues/4), [#6](https://github.com/maximedrn/opensea_automatic_uploader/issues/6), [#10](https://github.com/maximedrn/opensea_automatic_uploader/issues/10), [#11](https://github.com/maximedrn/opensea_automatic_uploader/issues/11), [#12](https://github.com/maximedrn/opensea_automatic_uploader/issues/12), [#14](https://github.com/maximedrn/opensea_automatic_uploader/issues/14)**.
-  * CSV file modified: separator changed (from ";" to ";;").
-* **Version 1.2:**
-  * Possibility to set a price for each NFT added.  
-    ➜ 1+ supplies and Polygon blockchain support added.
-  * Supply input issue fixed.
-  * Calendar method improved.
-* **Version 1.2-alpha:**
-  * Possibility to set a price for each NFT added.
-* **Version 1.1:** 
-  * XLSX support added.
-  * PC-wide data file browse support.
-  * Properties, Stats and Levels issues fixed. **[#1](https://github.com/maximedrn/opensea_automatic_uploader/issues/1)**.
+
 * **Version 1.0:** 
   * Inital commit.
 
@@ -66,26 +56,21 @@ This script allows you to upload and sell **as many NFTs as you want to Opensea*
 
 * ✔ <strike>MetaMask automatic login.</strike>
 * ✔ <strike>Opensea automatic login with MetaMask.</strike>
-* ❌ Opensea automatic login with different wallets.
-* ❌ Collection creator for Opensea.
 * ✔ <strike>Automatic NFT uploader.</strike>
 * ✔ <strike>Possibility to set a price for each NFT.</strike>  
-  * ✔ <strike>Support for 1+ supplies and Polygon blockchain.</strike>
-  * ❌ "Sell as bundle" part (not planned to be added).
-  * ✔ <strike>**Sale part**.</strike>
+* ✔ <strike>Support for 1+ supplies and Polygon blockchain.</strike>
+* ✔ <strike>**Actually Lists the NFT for sale**.</strike>
 * ✔ <strike>Data file browsing feature.</strike>
-* ✔ <strike>CSV structure reader and interpreter.</strike>
 * ✔ <strike>JSON structure reader and interpreter.</strike>
-* ✔ <strike>XLSX structure reader and interpreter.</strike>
-* ❌ NFT maker local website (soon).
+
 
 
 ## Instructions
 
 * ### Basic installation of Python for beginners:
-  * [Download this repository](https://github.com/maximedrn/opensea_automatic_uploader/archive/refs/heads/master.zip) or clone it by typing this command in your command prompt:
+  * [Download this repository](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader/archive/refs/heads/master.zip) or clone it by typing this command in your command prompt:
 ```
-git clone https://github.com/maximedrn/opensea_automatic_uploader.git
+git clone https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader.git
 ```
   * It requires [Python](https://www.python.org/) 3.7 or a newest version - _developped with Python 3.9.7_.
   * Install [pip](https://pip.pypa.io/en/stable/installation/) to be able to have needed Python modules.
@@ -94,38 +79,18 @@ git clone https://github.com/maximedrn/opensea_automatic_uploader.git
 pip install -r requirements.txt
 ```
 * ### Configuration of the bot:
-  * Extract the repository folder from the ZIP file, you should have a folder named  `opensea_automatic_uploader-master`.
+  * Extract the repository folder from the ZIP file, you should have a folder named  `KurtAtWork-OpenSea-Auto-Uploader-master`.
   * Download and install [Google Chrome](https://www.google.com/intl/en_en/chrome/).
   * Download the [ChromeDriver executable](https://chromedriver.chromium.org/downloads) that is compatible with the actual version of your Google Chrome browser and your OS (Operating System). To know your Google Chrome browser version, refer to: **_[What version of Google Chrome do I have?](https://www.whatismybrowser.com/)_**
   * Extract the executable file from the ZIP file and copy/paste it in the `assets/` folder of the repository.
-  * Create your NFTs data file containing all details of each NFT. It can be a JSON, CSV or XLSX file. You can save it in the `data/` folder.  
-    **[What structure should the files have?](https://github.com/maximedrn/opensea_automatic_uploader#data-files-structure)**
+  * Create your NFTs data files containing all details for each NFT. It currently MUST be JSON files. NFT Json files must be located in the `data/` folder.  
+    **[What structure should the files have?](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader#data-files-structure)**
 
 
 ## Data files structure
 
 If you do not want to add details to the values not required, leave:
-  * **a blank cell** for XLSX files (Excel):
-  <table>
-   <tbody>
-    <tr>
-     <td>File Path</td>
-     <td>NFT Name</td>
-     <td>Description</td>
-    </tr>
-    <tr>
-     <td>C:/Users/Admin/Desktop/NFT/nft_0001.png</td>
-     <td>NFT #1</td>
-     <td></td>
-    </tr>
-   </tbody>
-  </table>
 
-  * **a white space with two semicolons** for CSV files:
-  ```csv
-  file_path;; nft_name;; description;;
-  C:/Users/Admin/Desktop/NFT/nft_0001.png;; NFT #1;; ;;
-  ```
   * **an empty string** for JSON files: 
 ```json
 "file_path": "C:/Users/Admin/Desktop/NFT/nft_0001.png",
@@ -168,11 +133,11 @@ If you do not want to add details to the values not required, leave:
           <td>External Link</td>
           <td>String</td>
           <td></td>
-          <td>"external_link": "https://github.com/maximedrn/opensea_automatic_uploader",
+          <td>"external_link": "https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader",
              <br>"external_link": "",
           </td>
-          <td>https://github.com/maximedrn/opensea_automatic_uploader;;</td>
-          <td>https://github.com/maximedrn/opensea_automatic_uploader</td>
+          <td>https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader;;</td>
+          <td>https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader</td>
        </tr>
        <tr>
           <td>Description</td>
@@ -408,7 +373,7 @@ If you do not want to add details to the values not required, leave:
     </tbody>
  </table>
  
-  And it gives you something like this: [JSON](https://github.com/maximedrn/opensea_automatic_uploader/blob/master/data/json_structure_upload_and_sale.json), [CSV](https://github.com/maximedrn/opensea_automatic_uploader/blob/master/data/csv_structure_upload_and_sale.csv), [XLSX (must be downloaded to view it)](https://github.com/maximedrn/opensea_automatic_uploader/blob/master/data/xlsx_structure_upload_and_sale.xlsx).
+  And it gives you something like this: [JSON](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader/blob/master/data/json_structure_upload_and_sale.json).
  
 * ### Upload only
 
@@ -442,11 +407,11 @@ If you do not want to add details to the values not required, leave:
           <td>External Link</td>
           <td>String</td>
           <td></td>
-          <td>"external_link": "https://github.com/maximedrn/opensea_automatic_uploader",
+          <td>"external_link": "https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader",
              <br>"external_link": "",
           </td>
-          <td>https://github.com/maximedrn/opensea_automatic_uploader;;</td>
-          <td>https://github.com/maximedrn/opensea_automatic_uploader</td>
+          <td>https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader;;</td>
+          <td>https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader</td>
        </tr>
        <tr>
           <td>Description</td>
@@ -581,7 +546,7 @@ If you do not want to add details to the values not required, leave:
     </tbody>
  </table>
  
- And it gives you something like this: [JSON](https://github.com/maximedrn/opensea_automatic_uploader/blob/master/data/json_structure_upload_only.json), [CSV](https://github.com/maximedrn/opensea_automatic_uploader/blob/master/data/csv_structure_upload_only.csv), [XLSX (must be downloaded to view it)](https://github.com/maximedrn/opensea_automatic_uploader/blob/master/data/xlsx_structure_upload_only.xlsx).
+ And it gives you something like this: [JSON](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader/blob/master/data/json_structure_upload_only.json).
  
  * ### Sale only
  
@@ -711,7 +676,7 @@ If you do not want to add details to the values not required, leave:
     </tbody>
  </table>
 
-And it gives you something like this: [JSON](https://github.com/maximedrn/opensea_automatic_uploader/blob/master/data/json_structure_sale_only.json), [CSV](https://github.com/maximedrn/opensea_automatic_uploader/blob/master/data/csv_structure_sale_only.csv), [XLSX (must be downloaded to view it)](https://github.com/maximedrn/opensea_automatic_uploader/blob/master/data/xlsx_structure_sale_only.xlsx).
+And it gives you something like this: [JSON](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader/blob/master/data/json_structure_sale_only.json).
 
 
 ## Configuration of the sale part of the NFTs
