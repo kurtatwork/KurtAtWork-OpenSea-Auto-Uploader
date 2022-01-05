@@ -39,7 +39,7 @@ This script allows you to upload and sell **as many NFTs as you want to Opensea*
 
 **You can decide whether you want to upload or sell your NFTs, or both**. If you upload your NFTs and sell them later, a CSV file is created with the URL of the NFT as well as its Blockchain and supply number.
 
-➜ **Feel free to help support the dev of this github repo if it has helped you out in your NFT journey and you feel like giving back (THANK YOU)**:
+➜ **Feel free to support the dev of this repo if it has helped you out in your NFT journey and you feel like giving back (THANK YOU)**: <br>
 **0x8736ee29f772b9a972547c228a5f43e427e783ae** (Ethereum).<br>
 ➜ **Check out one of my collections on OpenSea if you feel like it [Kurt At Work](https://opensea.io/collection/selected-works-kurt-at-work)**.<br>
 ➜ **Check out another of my collections on OpenSea if you feel like it [SeaSlug Called Jamulous](https://opensea.io/collection/a-sea-slug-called-jamulous)**.<br>
