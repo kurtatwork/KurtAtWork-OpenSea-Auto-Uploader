@@ -566,9 +566,9 @@ If you do not want to add details to the values not required, leave:
           <td><strong>NFT URL * </strong></td>
           <td>String</td>
           <td></td>
-          <td>"nft_url": "https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/99995353970554757559721471534129028266698199001274859511402524949800648966145",</td>
-          <td>https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/99995353970554757559721471534129028266698199001274859511402524949800648966145;;</td>
-          <td>https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/99995353970554757559721471534129028266698199001274859511402524949800648966145</td>
+          <td>"nft_url": "https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/21688527815507990779780435242269546376679550267989735943769092947957782675457",</td>
+          <td>https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/21688527815507990779780435242269546376679550267989735943769092947957782675457;;</td>
+          <td>https://opensea.io/assets/matic/0x2953399124f0cbb46d2cbacd8a89cf0599974963/21688527815507990779780435242269546376679550267989735943769092947957782675457</td>
        </tr>
        <tr>
           <td><strong>Supply *</strong></td>
@@ -653,14 +653,14 @@ If you do not want to add details to the values not required, leave:
           <td>[True, "wallet"]
            <br>[False]
            <br>False</td>
-          <td>"specific_buyer": [true, "0xDD135d5be0a23f6daAAE7D2d0580828c9e09402E"]
+          <td>"specific_buyer": [true, "0x8736Ee29F772B9A972547C228a5F43E427E783AE"]
               <br>"specific_buyer": [false]
               <br>"specific_buyer": false</td>
-          <td>[True, "0xDD135d5be0a23f6daAAE7D2d0580828c9e09402E"];;
+          <td>[True, "0x8736Ee29F772B9A972547C228a5F43E427E783AE"];;
              <br>[False];;
              <br>False;;
           </td>
-          <td>[True, "0xDD135d5be0a23f6daAAE7D2d0580828c9e09402E"]
+          <td>[True, "0x8736Ee29F772B9A972547C228a5F43E427E783AE"]
              <br>[False]
              <br>False
           </td>
