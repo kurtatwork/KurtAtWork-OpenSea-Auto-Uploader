@@ -10,6 +10,12 @@ its not really designed to be the most user friendly or fully featured, its just
 
 Changes might come down the road, but for the time being, if you're using multiple json files to upload to opensea, this will work for you.
 
+➜ **Feel free to support the dev of this repo if it has helped you out in your NFT journey and you feel like giving back (THANK YOU)**: <br>
+**0x8736ee29f772b9a972547c228a5f43e427e783ae** (Ethereum).<br>
+➜ **Check out one of my collections on OpenSea if you feel like it [Kurt At Work](https://opensea.io/collection/selected-works-kurt-at-work)**.<br>
+➜ **Check out another of my collections on OpenSea if you feel like it [SeaSlug Called Jamulous](https://opensea.io/collection/a-sea-slug-called-jamulous)**.<br>
+➜ **Check out yet another one of my collections on OpenSea if you feel like it [Let's Go Brandon NFT](https://opensea.io/collection/letsgobrandon-nft)**.<br>
+
 # Automatically upload your NFTs on Opensea using Python Selenium.
 
 * **(_Version 1.0.0 - January 05, 2022_).**
@@ -38,12 +44,6 @@ Changes might come down the road, but for the time being, if you're using multip
 This script allows you to upload and sell **as many NFTs as you want to Opensea**, all **automatically** and **quickly** (about 2 NFTs per minute) **with metadata integrated**, and **Ethereum** and **Polygon** Blockchains are supported.  
 
 **You can decide whether you want to upload or sell your NFTs, or both**. If you upload your NFTs and sell them later, a CSV file is created with the URL of the NFT as well as its Blockchain and supply number.
-
-➜ **Feel free to support the dev of this repo if it has helped you out in your NFT journey and you feel like giving back (THANK YOU)**: <br>
-**0x8736ee29f772b9a972547c228a5f43e427e783ae** (Ethereum).<br>
-➜ **Check out one of my collections on OpenSea if you feel like it [Kurt At Work](https://opensea.io/collection/selected-works-kurt-at-work)**.<br>
-➜ **Check out another of my collections on OpenSea if you feel like it [SeaSlug Called Jamulous](https://opensea.io/collection/a-sea-slug-called-jamulous)**.<br>
-➜ **Check out yet another one of my collections on OpenSea if you feel like it [Let's Go Brandon NFT](https://opensea.io/collection/letsgobrandon-nft)**.<br>
 
 ## Changelog
 
