@@ -1,7 +1,7 @@
-   __ __         __    ___  __    _      __         __  <br>
-  / //_/_ ______/ /_  / _ |/ /_  | | /| / /__  ____/ /__<br>
- / ,< / // / __/ __/ / __ / __/  | |/ |/ / _ \/ __/  '_/<br>
-/_/|_|\_,_/_/  \__/ /_/ |_\__/   |__/|__/\___/_/ /_/\_\ <br>
+&nbsp&nbsp&nbsp__&nbsp__&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp__&nbsp&nbsp&nbsp&nbsp___&nbsp&nbsp__&nbsp&nbsp&nbsp&nbsp_&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp__&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp__&nbsp&nbsp<br>
+&nbsp&nbsp/&nbsp//_/_&nbsp______/&nbsp/_&nbsp&nbsp/&nbsp_&nbsp|/&nbsp/_&nbsp&nbsp|&nbsp|&nbsp/|&nbsp/&nbsp/__&nbsp&nbsp____/&nbsp/__<br>
+&nbsp/&nbsp,<&nbsp/&nbsp//&nbsp/&nbsp__/&nbsp__/&nbsp/&nbsp__&nbsp/&nbsp__/&nbsp&nbsp|&nbsp|/&nbsp|/&nbsp/&nbsp_&nbsp\/&nbsp__/&nbsp&nbsp'_/<br>
+/_/|_|\_,_/_/&nbsp&nbsp\__/&nbsp/_/&nbsp|_\__/&nbsp&nbsp&nbsp|__/|__/\___/_/&nbsp/_/\_\&nbsp<br>
 KurtAtWork-OpenSea-Automatic-Uploader-version-1.0.0                                                          
 
 # Automatically upload your NFTs on Opensea using Python Selenium.
