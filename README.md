@@ -43,7 +43,7 @@ Changes might come down the road, but for the time being, if you're using multip
 
 This script allows you to upload and sell **as many NFTs as you want to Opensea**, all **automatically** and **quickly** (about 2 NFTs per minute) **with metadata integrated**, and **Ethereum** and **Polygon** Blockchains are supported.  
 
-**You can decide whether you want to upload or sell your NFTs, or both**. Currently this code has a hard coded schedule of a 6 month sales listing (the old code was breaking at this point so i figured an easy fix was to just comment out that line of code and let the default value do its thing)
+**You can decide whether you want to upload or sell your NFTs, or both**. Currently this code has a hard coded schedule of a 6 month sales listing (the old code was breaking at this point so i figured an easy fix was to just comment out that line of code and let the default value do its thing, since what I wanted was the default anyway)
 
 ## Changelog
 
