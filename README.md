@@ -1,5 +1,7 @@
 # KurtAtWork-OpenSea-Automatic-Uploader version-1.0.0                                                          
 
+Hey everyone, I forked a copy of another Auto-Uploader that I downloaded from another github repo, and after using it for a while and having little success with it, i ended up trying to modify the code to make it work the way it was intended to... former code had issues uploading multiple NFTs (i could only get it to do one NFT no matter what i did to the code to change it), also there were issues with actually listing them (former code only had a comment at the line where the sale was supposed to happen saying 'Do this'), and other problems. after weeks of trying to get it to upload more than one NFT at a time and having zero success, i ended up just giving up on modifying the old code and decided to just rewrite the entire thing from the ground up and picking apart pieces from the old code to integrate into this one.
+
 # Automatically upload your NFTs on Opensea using Python Selenium.
 
 * **(_Version 1.0.0 - January 05, 2022_).**
