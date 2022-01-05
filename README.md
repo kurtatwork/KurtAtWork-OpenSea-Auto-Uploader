@@ -1,6 +1,10 @@
 # KurtAtWork-OpenSea-Automatic-Uploader version-1.0.0                                                          
 
-Hey everyone, I forked a copy of another Auto-Uploader that I downloaded from another github repo, and after using it for a while and having little success with it, i ended up trying to modify the code to make it work the way it was intended to... former code had issues uploading multiple NFTs (i could only get it to do one NFT no matter what i did to the code to change it), also there were issues with actually listing them (former code only had a comment at the line where the sale was supposed to happen saying 'Do this'), and other problems. after weeks of trying to get it to upload more than one NFT at a time and having zero success, i ended up just giving up on modifying the old code and decided to just rewrite the entire thing from the ground up and picking apart pieces from the old code to integrate into this one.
+Hey everyone, I forked a copy of another Auto-Uploader that I downloaded from a github repo. Former code had issues uploading multiple NFTs (i could only get it to do mint and list ONE NFT no matter what i did to the code to change it, tried many many changes), also there were issues with actually listing them (former code only had a comment at the line where the sale was supposed to happen saying 'Do this'), and other problems. 
+
+after weeks of trying to get it to upload more than one NFT at a time and having zero success, I ended up giving up on modifying the old code and decided to rewrite the entire thing from the ground up and using a few bits and pieces from the old code that actually worked. Anyway, here it is... it only works with Json files currently because that's what i needed. This project was built more around my own needs and is uploaded to this repo in that way as well... its not really designed to be the most user friendly or fully featured, its just a wham-bam-thankyou-ma'am sorta Git'er Done kinda project. 
+
+Changes might come down the road, but for the time being, if you're using multiple json files to upload this will work for you.
 
 # Automatically upload your NFTs on Opensea using Python Selenium.
 
