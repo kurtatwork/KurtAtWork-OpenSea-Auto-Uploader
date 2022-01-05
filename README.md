@@ -2,7 +2,11 @@
 
 Hey everyone, I forked a copy of another Auto-Uploader that I downloaded from a github repo. Former code had issues uploading multiple NFTs (i could only get it to do mint and list ONE NFT no matter what i did to the code to change it, tried many many changes), also there were issues with actually listing them (former code only had a comment at the line where the sale was supposed to happen saying 'Do this'), and other problems. 
 
-after weeks of trying to get it to upload more than one NFT at a time and having zero success, I ended up giving up on modifying the old code and decided to rewrite the entire thing from the ground up and using a few bits and pieces from the old code that actually worked. Anyway, here it is... it only works with Json files currently because that's what i needed. This project was built more around my own needs and is uploaded to this repo in that way as well... its not really designed to be the most user friendly or fully featured, its just a wham-bam-thankyou-ma'am sorta Git'er Done kinda project. 
+after weeks of trying to get it to upload more than one NFT at a time and having zero success, I ended up giving up on modifying the old code and decided to rewrite the entire thing from the ground up and using a few bits and pieces from the old code that actually worked. 
+
+Anyway, here it is... it only works with Json files currently because that's what i needed. This project was built more around my own needs and is uploaded to this repo in that way as well... 
+
+its not really designed to be the most user friendly or fully featured, its just a wham-bam-thankyou-ma'am sorta Git'er Done kinda project. 
 
 Changes might come down the road, but for the time being, if you're using multiple json files to upload this will work for you.
 
@@ -35,37 +39,15 @@ This script allows you to upload and sell **as many NFTs as you want to Opensea*
 
 **You can decide whether you want to upload or sell your NFTs, or both**. If you upload your NFTs and sell them later, a CSV file is created with the URL of the NFT as well as its Blockchain and supply number.
 
-➜ **If you sell any NFT with this bot, you can consider sharing some of your earnings**: 😉 
-**0x8736ee29f772b9a972547c228a5f43e427e783ae** (Ethereum).  
-➜ **Or you can buy me a NFT from my collection [Crypto Parrot](https://opensea.io/collection/letsgobrandon-nft) if this bot was useful to you**.
-
+➜ **Feel free to help support the dev of this github repo if it has helped you out in your NFT journey and you feel like giving back (THANK YOU)**:
+**0x8736ee29f772b9a972547c228a5f43e427e783ae** (Ethereum).
+➜ **Check out one of my collections on OpenSea if you feel like it [Kurt At Work](https://opensea.io/collection/selected-works-kurt-at-work)**.
+➜ **Check out another of my collections on OpenSea if you feel like it [SeaSlug Called Jamulous](https://opensea.io/collection/a-sea-slug-called-jamulous)**.
+➜ **Check out yet another one of my collections on OpenSea if you feel like it [Let's Go Brandon NFT](https://opensea.io/collection/letsgobrandon-nft)**.
 
 ## Changelog
 
-* **Version 1.4.2:**
-  * Listing of NFT on the Ethereum Blockchain is fully supported. **Be sure to make a deposit and have more than 0.05 ETH on your wallet.**
-* **Version 1.4.1:**
-  * Small fix for XLSX files. Empty cells were interpreted as "NaN", which is not interpreted as an empty string for Python. **[#18](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader/issues/18), [#23](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader/issues/23)**.
-* **Version 1.4:**
-  * You can now decide whether you want to upload or sell your NFTs, or both. **[#3](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader/issues/3), [#22](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader/issues/22)**.
-  * Signing the MetaMask contract works every time. It can take 30 seconds to be signed when connecting to Opensea. **[#5](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader/issues/5), [#17](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader/issues/17)**.
-  * After uploading the NFT, the bot would crash when it tried to sell it (the URL was not correct). Now it doesn't. **[#17](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader/issues/17)**.
-  * MacOS and Linux support improved.
-  * Calendar method improved.
-* **Version 1.3:**
-  * Important fixes. **[#4](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader/issues/4), [#6](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader/issues/6), [#10](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader/issues/10), [#11](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader/issues/11), [#12](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader/issues/12), [#14](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader/issues/14)**.
-  * CSV file modified: separator changed (from ";" to ";;").
-* **Version 1.2:**
-  * Possibility to set a price for each NFT added.  
-    ➜ 1+ supplies and Polygon blockchain support added.
-  * Supply input issue fixed.
-  * Calendar method improved.
-* **Version 1.2-alpha:**
-  * Possibility to set a price for each NFT added.
-* **Version 1.1:** 
-  * XLSX support added.
-  * PC-wide data file browse support.
-  * Properties, Stats and Levels issues fixed. **[#1](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader/issues/1)**.
+
 * **Version 1.0:** 
   * Inital commit.
 
@@ -77,10 +59,10 @@ This script allows you to upload and sell **as many NFTs as you want to Opensea*
 * ✔ <strike>Automatic NFT uploader.</strike>
 * ✔ <strike>Possibility to set a price for each NFT.</strike>  
 * ✔ <strike>Support for 1+ supplies and Polygon blockchain.</strike>
-* ✔ <strike>**Sale part**.</strike>
+* ✔ <strike>**Actually Lists the NFT for sale**.</strike>
 * ✔ <strike>Data file browsing feature.</strike>
 * ✔ <strike>JSON structure reader and interpreter.</strike>
-* ❌ NFT maker local website (soon).
+
 
 
 ## Instructions
