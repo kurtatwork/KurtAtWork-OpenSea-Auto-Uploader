@@ -110,24 +110,18 @@ If you do not want to add details to the values not required, leave:
           <td>Data Types</td>
           <td>Literal examples</td>
           <td>JSON examples</td>
-          <td>CSV examples</td>
-          <td>XLSX examples</td>
        </tr>
        <tr>
           <td><strong>File Path *</strong></td>
           <td>String</td>
           <td></td>
           <td>"file_path": "C:/Users/Admin/Desktop/NFT/nft_0001.png",</td>
-          <td>C:/Users/Admin/Desktop/NFT/nft_0001.png;;</td>
-          <td>C:/Users/Admin/Desktop/NFT/nft_0001.png</td>
        </tr>
        <tr>
           <td><strong>NFT Name *</strong></td>
           <td>String</td>
           <td></td>
           <td>"nft_name": "NFT #1",</td>
-          <td>NFT #1;;</td>
-          <td>NFT #1</td>
        </tr>
        <tr>
           <td>External Link</td>
@@ -136,8 +130,6 @@ If you do not want to add details to the values not required, leave:
           <td>"external_link": "https://yournftwebsite.com/yournftcollection/000001",
              <br>"external_link": "",
           </td>
-          <td>https://yournftwebsite.com/yournftcollection/000001;;</td>
-          <td>https://yournftwebsite.com/yournftcollection/000001</td>
        </tr>
        <tr>
           <td>Description</td>
@@ -146,8 +138,6 @@ If you do not want to add details to the values not required, leave:
           <td>"description": "This is my first NFT.",
              <br>"description": "",
           </td>
-          <td>This is my first NFT.;;</td>
-          <td>This is my first NFT.</td>
        </tr>
        <tr>
           <td>Collection</td>
@@ -156,8 +146,6 @@ If you do not want to add details to the values not required, leave:
           <td>"collection": "My NFTs",
              <br>"collection": "",
           </td>
-          <td>My NFTs;;</td>
-          <td>My NFTs.</td>
        </tr>
        <tr>
           <td>Properties</td>
@@ -168,14 +156,6 @@ If you do not want to add details to the values not required, leave:
           <td>"properties": [{ "type": "Dog", "name": "Male" }, { "type": "Cat", "name": "Female" }],
              <br>"properties": [{ "type": "Dog", "name": "Male" }],
              <br>"properties": "",
-          </td>
-          <td>[["Dog", "Male"], ["Cat", "Female"]];;
-             <br>[["Dog", "Male"]];;
-             <br>["Dog", "Male"];;
-          </td>
-          <td>[["Dog", "Male"], ["Cat", "Female"]]
-             <br>[["Dog", "Male"]]
-             <br>["Dog", "Male"]
           </td>
        </tr>
        <tr>
@@ -188,14 +168,6 @@ If you do not want to add details to the values not required, leave:
              <br>"levels": [{ "name": "Speed", "from": 2, "to": 5 }],
              <br>"levels": "",
           </td>
-          <td>[["Speed", 2, 5], ["Width", 1, 10]];;
-             <br>[["Speed", 2, 5]];;
-             <br>["Speed", 2, 5];;
-          </td>
-          <td>[["Speed", 2, 5], ["Width", 1, 10]]
-             <br>[["Speed", 2, 5]]
-             <br>["Speed", 2, 5]
-          </td>
        </tr>
        <tr>
           <td>Stats</td>
@@ -206,14 +178,6 @@ If you do not want to add details to the values not required, leave:
           <td>"stats": [{ "name": "Strenght", "from": 10, "to": 100 }, { "name": "Age", "from": 1, "to": 99 }],
              <br>"stats": [{ "name": "Strenght", "from": 10, "to": 100 }],
              <br>"stats": "",
-          </td>
-          <td>[["Strenght", 10, 100], ["Age", 1, 99]];;
-             <br>[["Strenght", 10, 100]];;
-             <br>["Strenght", 10, 100];;
-          </td>
-          <td>[["Strenght", 10, 100], ["Age", 1, 99]]
-             <br>[["Strenght", 10, 100]]
-             <br>["Strenght", 10, 100]
           </td>
        </tr>
        <tr>
@@ -229,14 +193,6 @@ If you do not want to add details to the values not required, leave:
              <br>"unlockable_content": false,
              <br>"unlockable_content": "",
           </td>
-          <td>[True, "Thank you for purchasing my NFT!"];;
-             <br>[False];;
-             <br>False;;
-          </td>
-          <td>[True, "Thank you for purchasing my NFT!"]
-             <br>[False]
-             <br>False
-          </td>
        </tr>
        <tr>
           <td>Explicit And Sensitive Content</td>
@@ -246,12 +202,6 @@ If you do not want to add details to the values not required, leave:
              <br>"explicit_and_sensitive_content": false,
              <br>"explicit_and_sensitive_content": "",
           </td>
-          <td>True;;
-             <br>False;;
-          </td>
-          <td>True
-             <br>False
-          </td>
        </tr>
        <tr>
           <td>Supply</td>
@@ -260,8 +210,6 @@ If you do not want to add details to the values not required, leave:
           <td>"supply": 1,
              <br>"supply" : "",
           </td>
-          <td>1;;</td>
-          <td>1</td>
        </tr>
        <tr>
           <td>Blockchain</td>
@@ -270,8 +218,6 @@ If you do not want to add details to the values not required, leave:
           <td>"blockchain": "Polygon",
              <br>"blockchain" : "",
           </td>
-          <td>Polygon;;</td>
-          <td>Polygon</td>
        </tr>
        <tr>
           <td>Sale Type (only for Ethereum Blockchain and 1 supply)</td>
@@ -280,8 +226,6 @@ If you do not want to add details to the values not required, leave:
           <td>"sale_type": "Timed Auction",
              <br>"sale_type": "",
           </td>
-          <td>Timed Auction;;</td>
-          <td>Timed Auction</td>
        </tr>
        <tr>
           <td><strong>Price *</strong></td>
@@ -289,12 +233,6 @@ If you do not want to add details to the values not required, leave:
           <td></td>
           <td>"price": 5,
              <br>"price": 0.25,
-          </td>
-          <td>5;;
-             <br>0.25;;
-          </td>
-          <td>5
-             <br>0.25
           </td>
        </tr>
        <tr>
@@ -306,14 +244,6 @@ If you do not want to add details to the values not required, leave:
              <br>"method": ["Sell to highest bidder", 0.05],
              <br>"method": ["Sell to highest bidder", ""],
              <br>"method": "",
-          </td>
-          <td>["Sell with declining price", 0.002];;
-             <br>["Sell to highest bidder", 0.05];;
-             <br>["Sell to highest bidder", ""];;
-          </td>
-          <td>["Sell with declining price", 0.002]
-             <br>["Sell to highest bidder", 0.05]
-             <br>["Sell to highest bidder", ""]
           </td>
        </tr>
        <tr>
@@ -329,14 +259,6 @@ If you do not want to add details to the values not required, leave:
              <br>"duration": "1 week",
              <br>"duration": "",
           </td>
-          <td>["01-01-2022 14:00", "01-04-2022 15:00"];;
-             <br>["1 week"];;
-             <br>1 week;;
-          </td>
-          <td>["01-01-2022 14:00", "01-04-2022 15:00"]
-             <br>["1 week"]
-             <br>1 week
-          </td>
        </tr>
        <tr>
           <td>Specific Buyer</td>
@@ -351,14 +273,6 @@ If you do not want to add details to the values not required, leave:
              <br>"specific_buyer": false,
              <br>"specific_buyer": "",
           </td>
-          <td>[True, "0xDD135d5be0a23f6daAAE7D2d0580828c9e09402E"];;
-             <br>[False];;
-             <br>False;;
-          </td>
-          <td>[True, "0xDD135d5be0a23f6daAAE7D2d0580828c9e09402E"]
-             <br>[False]
-             <br>False
-          </td>
        </tr>
        <tr>
           <td><strong>Quantity * (only for 1+ supplies)</strong></td>
@@ -367,8 +281,6 @@ If you do not want to add details to the values not required, leave:
           <td>"quantity": 4
              <br>"quantity": ""
           </td>
-          <td>4</td>
-          <td>4</td>
        </tr>
     </tbody>
  </table>
