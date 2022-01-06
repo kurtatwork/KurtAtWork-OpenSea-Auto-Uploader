@@ -133,11 +133,11 @@ If you do not want to add details to the values not required, leave:
           <td>External Link</td>
           <td>String</td>
           <td></td>
-          <td>"external_link": "https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader",
+          <td>"external_link": "https://yournftwebsite.com/yournftcollection/000001",
              <br>"external_link": "",
           </td>
-          <td>https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader;;</td>
-          <td>https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader</td>
+          <td>https://yournftwebsite.com/yournftcollection/000001;;</td>
+          <td>https://yournftwebsite.com/yournftcollection/000001</td>
        </tr>
        <tr>
           <td>Description</td>
