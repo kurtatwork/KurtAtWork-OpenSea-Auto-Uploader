@@ -6,7 +6,9 @@ After weeks of trying to get it to upload more than one NFT at a time and having
 
 Anyway, here it is... it only works with Json files currently because that's what i needed. This project was built more around my own needs and is uploaded to this repo in that way as well... 
 
-its not really designed to be the most user friendly or fully featured, its just a wham-bam thank you ma'am sorta "Git'er Done" kinda project. 
+You're going to need to modify the code to get it to work with your project. I'm sure that i could do some things to make it more user friendly... 
+
+On the other hand, when i wrote it, it wasn't really designed to be the most user friendly or fully featured, its just a wham-bam thank you ma'am sorta "Git'er Done" kinda project. 
 
 Changes might come down the road, but for the time being, if you're using multiple json files to upload to opensea, this will work for you.
 
