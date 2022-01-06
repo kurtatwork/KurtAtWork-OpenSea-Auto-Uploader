@@ -12,7 +12,6 @@ Changes might come down the road, but for the time being, if you're using multip
 
 ➜ **Feel free to support the dev of this repo if it has helped you out in your NFT journey and you feel like giving back (THANK YOU)**: <br>
 ➜ **0x8736ee29f772b9a972547c228a5f43e427e783ae** (Ethereum).<br>
-<br>
 ➜ **Check out one of my collections on OpenSea if you feel like it [Kurt At Work](https://opensea.io/collection/selected-works-kurt-at-work)**.<br>
 ➜ **Check out another of my collections on OpenSea if you feel like it [SeaSlug Called Jamulous](https://opensea.io/collection/a-sea-slug-called-jamulous)**.<br>
 ➜ **Check out yet another one of my collections on OpenSea if you feel like it [Let's Go Brandon NFT](https://opensea.io/collection/letsgobrandon-nft)**.<br>
