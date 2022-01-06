@@ -1,16 +1,5 @@
 # KurtAtWork-OpenSea-Automatic-Uploader version-1.0.0                                                          
 
-<<<<<<< HEAD
-Hey everyone, I forked a copy of another Auto-Uploader that I downloaded from a github repo. Former code had issues uploading multiple NFTs (i could only get it to mint and list ONE NFT no matter what i did to the code to change it, tried many many changes), also there were issues with actually listing them (former code only had a comment at the line where the sale was supposed to happen saying 'Do this'), and other problems. 
-
-after weeks of trying to get it to upload more than one NFT at a time and having zero success, I ended up giving up on modifying the old code and decided to rewrite the entire thing from the ground up and using a few bits and pieces from the old code that actually worked. 
-
-Anyway, here it is... it only works with Json files currently because that's what i needed. This project was built more around my own needs and is uploaded to this repo in that way as well... 
-
-its not really designed to be the most user friendly or fully featured, its just a wham-bam-thankyou-ma'am sorta Git'er Done kinda project. 
-
-Changes might come down the road, but for the time being, if you're using multiple json files to upload this will work for you.
-=======
 Hey everyone, I forked a copy of another Auto-Uploader that I downloaded from a github repo. Former code had issues uploading multiple NFTs (I could only get it to mint and list ONE NFT no matter what I did to the code to change it, tried many many changes), also there were issues with actually listing them (former code only had a comment at the line where the sale was supposed to happen saying 'Do this'), and other problems. 
 
 After weeks of trying to get it to upload more than one NFT at a time and having zero success, I ended up giving up on modifying the old code and decided to rewrite the entire thing from the ground up and using a few bits and pieces from the old code that actually worked. 
@@ -26,7 +15,6 @@ Changes might come down the road, but for the time being, if you're using multip
 ➜ **Check out one of my collections on OpenSea if you feel like it [Kurt At Work](https://opensea.io/collection/selected-works-kurt-at-work)**.<br>
 ➜ **Check out another of my collections on OpenSea if you feel like it [SeaSlug Called Jamulous](https://opensea.io/collection/a-sea-slug-called-jamulous)**.<br>
 ➜ **Check out yet another one of my collections on OpenSea if you feel like it [Let's Go Brandon NFT](https://opensea.io/collection/letsgobrandon-nft)**.<br>
->>>>>>> f293b2ebf59d3f769120b2151c195c01e4302a3f
 
 # Automatically upload your NFTs on Opensea using Python Selenium.
 
@@ -53,21 +41,9 @@ Changes might come down the road, but for the time being, if you're using multip
 
 ## What does this bot do?
 
-<<<<<<< HEAD
-This script allows you to upload and sell **as many NFTs as you want to Opensea**, all **automatically** and **quickly** (about 2.5 NFTs per minute). **All metadata are integrated**, and the **Ethereum** and **Polygon** Blockchains are supported.  
-
-**You can decide whether you want to upload or sell your NFTs, or both**. If you upload your NFTs and sell them later, a CSV file is created with the URL of the NFT as well as its Blockchain and supply number.
-
-➜ **Feel free to help support the dev of this github repo if it has helped you out in your NFT journey and you feel like giving back (THANK YOU)**:
-**0x8736ee29f772b9a972547c228a5f43e427e783ae** (Ethereum).
-➜ **Check out one of my collections on OpenSea if you feel like it [Kurt At Work](https://opensea.io/collection/selected-works-kurt-at-work)**.
-➜ **Check out another of my collections on OpenSea if you feel like it [SeaSlug Called Jamulous](https://opensea.io/collection/a-sea-slug-called-jamulous)**.
-➜ **Check out yet another one of my collections on OpenSea if you feel like it [Let's Go Brandon NFT](https://opensea.io/collection/letsgobrandon-nft)**.
-=======
 This script allows you to upload and sell **as many NFTs as you want to Opensea**, all **automatically** and **quickly** (about 2 NFTs per minute) **with metadata integrated**, and **Ethereum** and **Polygon** Blockchains are supported.  
 
 **You can decide whether you want to upload or sell your NFTs, or both**. Currently this code has a hard coded schedule of a 6 month sales listing (the old code was breaking at this point so i figured an easy fix was to just comment out that line of code and let the default value do its thing, since what I wanted was the default anyway)
->>>>>>> f293b2ebf59d3f769120b2151c195c01e4302a3f
 
 ## Changelog
 
