@@ -1,16 +1,17 @@
 # KurtAtWork-OpenSea-Automatic-Uploader version-1.0.0                                                          
 
-Hey everyone, I forked a copy of another Auto-Uploader that I downloaded from a github repo. Former code had issues uploading multiple NFTs (I could only get it to mint and list ONE NFT no matter what I did to the code to change it, tried many many changes), also there were issues with actually listing them (former code only had a comment at the line where the sale was supposed to happen saying 'Do this'), and other problems. 
+Hey everyone, I created a Custom selenium python script borrowing bits and pieces from the Maxime OpenSea Auto Uploader script. I had tried using his script as it was, but I ran into many issues, probably mostly user error on my part (who knows)
 
-After weeks of trying to get it to upload more than one NFT at a time and having zero success, I ended up giving up on modifying the old code and decided to rewrite the entire thing from the ground up and using a few bits and pieces from the old code that actually worked. 
-
-Anyway, here it is... it only works with Json files currently because that's what i needed. This project was built more around my own needs and is uploaded to this repo in that way as well... 
-
-You're going to need to modify the code to get it to work with your project. I'm sure that i could do some things to make it more user friendly... 
+Anyway, here it is... it only works with Json files currently because that's what i needed. This project was built more around my own needs and is uploaded to this repo in that way as well... It's NOT going to work for everyone, and you'll very highly likely need to modify the code to get it to work with your project. 
+I'm sure that i could do some things to make it more user friendly... 
 
 On the other hand, when i wrote it, it wasn't really designed to be the most user friendly or fully featured, its just a wham-bam thank you ma'am sorta "Git'er Done" kinda project. 
 
-Changes might come down the road, but for the time being, if you're using multiple json files to upload to opensea, this will work for you.
+Changes might come down the road, but for the time being, if you're using multiple json files to upload to opensea, this should work for you (with a little elbow grease).
+
+The way its supposed to work is, after setting up the folders and files, you add your Json files to the Data folder... you don't use the single Master Json file that's generated from say, the hashlips generator for instance... you would instead use the individual numbered json files. Add as many of those as you want to the data file, and then run the script and it'll log into your metamask, go to to opensea, create an NFT (add properties, collection, set which blockchain, etc), it will then MINT that NFT and then LIST the NFT for whatever price set in the Json file... it will then go on to the next Json file in the data folder and do the same thing to that until it has gone through all Json files.
+
+Let me know what you think, and how i could improve my code. I'm open to hearing feedback and welcome changes.
 
 ➜ **Feel free to support the dev of this repo if it has helped you out in your NFT journey and you feel like giving back (THANK YOU)**: <br>
 ➜ **0x8736ee29f772b9a972547c228a5f43e427e783ae** (Ethereum).<br>
