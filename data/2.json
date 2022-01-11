@@ -1,0 +1,82 @@
+{
+  "nft": [
+    {
+      "file_path": "C:/User/YourProfile/Desktop/New Folder(580081134)/PathToYourImages/GoesHere/2.png",
+      "nft_name": "Your Nft Name Goes Here #000002",
+      "external_link": "https://yourprojectwebsite.com/path/000002",
+      "description": "Your Nft Name Goes Here \n The most badass NFT project in the history NFT\n blah blah blah insert the rest of your description here",
+      "collection": "Your Collection Name Goes Here",
+      "properties": [
+        {
+          "type": "Background",
+          "name": "'Coolest Background Image Ever'"
+        },
+        {
+          "type": "Subject",
+          "name": "Normal Person"
+        },
+        {
+          "type": "Shine",
+          "name": "No Shine"
+        },
+        {
+          "type": "Eyes",
+          "name": "Outward Cross Eyed"
+        },
+        {
+          "type": "Teeth",
+          "name": "Old Lady Gums"
+        },
+        {
+          "type": "Mustache",
+          "name": "No Mustache"
+        },
+        {
+          "type": "Back_of_Head",
+          "name": "None"
+        },
+        {
+          "type": "Lazer_Eyes",
+          "name": "No Haz Lazer Eyes"
+        },
+        {
+          "type": "Flammability",
+          "name": "Is Not On Fire"
+        },
+        {
+          "type": "Rays",
+          "name": "No Rays"
+        },
+        {
+          "type": "Glasses",
+          "name": "No Glasses"
+        },
+        {
+          "type": "Nose_Accessory",
+          "name": "No Accessory"
+        },
+        {
+          "type": "Hat",
+          "name": "No Hat"
+        },
+        {
+          "type": "Stupid_Text_Front",
+          "name": "Terminal"
+        },
+        {
+          "type": "Stupid_Text_Back",
+          "name": "Rosewood Std"
+        }
+      ],
+      "unlockable_content": false,
+      "explicit_and_sensitive_content": false,
+      "supply": 1,
+      "blockchain": "Polygon",
+      "sale_type": "Fixed Price",
+      "price": 0.033,
+      "duration": "6 months",
+      "specific_buyer": false,
+      "quantity": 1
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "nft": [
+    {
+      "file_path": "C:/User/YourProfile/Desktop/New Folder(580081134)/PathToYourImages/GoesHere/1.png",
+      "nft_name": "Your Nft Name Goes Here #000001",
+      "external_link": "https://yourprojectwebsite.com/path/000001",
+      "description": "Your Nft Name Goes Here \n The most badass NFT project in the history NFT\n blah blah blah insert the rest of your description here",
+      "collection": "Your Collection Name Goes Here",
+      "properties": [
+        {
+          "type": "Background",
+          "name": "'White'"
+        },
+        {
+          "type": "Subject",
+          "name": "Oversaturated Fire Person"
+        },
+        {
+          "type": "Shine",
+          "name": "No Shine"
+        },
+        {
+          "type": "Eyes",
+          "name": "Normal Eyes"
+        },
+        {
+          "type": "Teeth",
+          "name": "Shark Teeth"
+        },
+        {
+          "type": "Mustache",
+          "name": "No Mustache"
+        },
+        {
+          "type": "Back_of_Head",
+          "name": "None"
+        },
+        {
+          "type": "Lazer_Eyes",
+          "name": "No Haz Lazer Eyes"
+        },
+        {
+          "type": "Flammability",
+          "name": "Is Not On Fire"
+        },
+        {
+          "type": "Rays",
+          "name": "No Rays"
+        },
+        {
+          "type": "Glasses",
+          "name": "No Glasses"
+        },
+        {
+          "type": "Nose_Accessory",
+          "name": "No Accessory"
+        },
+        {
+          "type": "Hat",
+          "name": "Crown"
+        },
+        {
+          "type": "Stupid_Text_Front",
+          "name": "No Text"
+        },
+        {
+          "type": "Stupid_Text_Back",
+          "name": "No Text"
+        }
+      ],
+      "unlockable_content": false,
+      "explicit_and_sensitive_content": false,
+      "supply": 1,
+      "blockchain": "Polygon",
+      "sale_type": "Fixed Price",
+      "price": 0.033,
+      "duration": "6 months",
+      "specific_buyer": false,
+      "quantity": 1
+    }
+  ]
+}
