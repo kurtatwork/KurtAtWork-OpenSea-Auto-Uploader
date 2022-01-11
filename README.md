@@ -92,9 +92,9 @@ pip install -r requirements.txt
   * Feel free to reach out in a ticket request if you need assistance or if you have suggestions for ways to improve this script.
   * And again, if you enjoy this script or get some valuable use out of it, feel free to consider donating to my wallet, or purchasing an NFT from one of my collections.
 ➜ **0x8736ee29f772b9a972547c228a5f43e427e783ae** (Ethereum).<br>
-➜ **One of my collections on OpenSea if you feel like it [Kurt At Work](https://opensea.io/collection/selected-works-kurt-at-work)**.<br>
-➜ **Another one of my collections on OpenSea if you feel like it [Let's Go Brandon NFT](https://opensea.io/collection/letsgobrandon-nft)**.<br>
-➜ **Yet Another of my collections on OpenSea if you feel like it [SeaSlug Called Jamulous](https://opensea.io/collection/a-sea-slug-called-jamulous)**.<br>
+➜ **One of my collections on OpenSea [Kurt At Work](https://opensea.io/collection/selected-works-kurt-at-work)**.<br>
+➜ **Another one of my collections on OpenSea [Let's Go Brandon NFT](https://opensea.io/collection/letsgobrandon-nft)**.<br>
+➜ **Yet Another of my collections on OpenSea [SeaSlug Called Jamulous](https://opensea.io/collection/a-sea-slug-called-jamulous)**.<br>
   
     **[What structure should the files have?](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader#data-files-structure)**
 
