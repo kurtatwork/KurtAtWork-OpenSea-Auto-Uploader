@@ -16,15 +16,14 @@ Let me know what you think, and how i could improve my code. I'm open to hearing
 ➜ **Feel free to support the dev of this repo if it has helped you out in your NFT journey and you feel like giving back (THANK YOU)**: <br>
 ➜ **0x8736ee29f772b9a972547c228a5f43e427e783ae** (Ethereum).<br>
 ➜ **Check out one of my collections on OpenSea if you feel like it [Kurt At Work](https://opensea.io/collection/selected-works-kurt-at-work)**.<br>
-➜ **Check out another of my collections on OpenSea if you feel like it [SeaSlug Called Jamulous](https://opensea.io/collection/a-sea-slug-called-jamulous)**.<br>
 ➜ **Check out yet another one of my collections on OpenSea if you feel like it [Let's Go Brandon NFT](https://opensea.io/collection/letsgobrandon-nft)**.<br>
+➜ **Check out another of my collections on OpenSea if you feel like it [SeaSlug Called Jamulous](https://opensea.io/collection/a-sea-slug-called-jamulous)**.<br>
 
 # Automatically upload your NFTs on Opensea using Python Selenium.
 
 * **(_Version 1.0.0 - January 05, 2022_).**
 * Sign up on [Opensea](https://opensea.io/?ref=0x8736ee29f772b9a972547c228a5f43e427e783ae) (Affiliate link).
 * Sign up on [MetaMask](https://metamask.io/).
-
 
 # Table of contents
 
@@ -86,8 +85,20 @@ pip install -r requirements.txt
   * Download and install [Google Chrome](https://www.google.com/intl/en_en/chrome/).
   * Download the [ChromeDriver executable](https://chromedriver.chromium.org/downloads) that is compatible with the actual version of your Google Chrome browser and your OS (Operating System). To know your Google Chrome browser version, refer to: **_[What version of Google Chrome do I have?](https://www.whatismybrowser.com/)_**
   * Extract the executable file from the ZIP file and copy/paste it in the `assets/` folder of the repository.
-  * Create your NFTs data files containing all details for each NFT. It currently MUST be JSON files. NFT Json files must be located in the `data/` folder.  
+  * Create your NFTs data files containing all details for each NFT. It currently MUST be JSON files. Examples provided in the 'data' foler in this project repo. 
+  * Your NFT Json files must be located in the `data/` folder and the name of each one must be a number.
+  * Make sure that your Json files match the formatting of the example Json sample files... if they do not match, i.e. you end up having to change the number of properties in the Json file, then changes may also need to be made to the main.py file in order to accomodate for those differences. 
+  * Regardless of whether you changed the the formatting of the Json files, you will want to look into the code of the main.py file and see if you need to change things here or there to accomodate your particular project. there is a certain portion of the code that automatically spits out new Json files after the NFTs are minted and listed, and you may want to change some of the preset data there such as the 'tags' field, and other fields... There's probably a few other things you might want to change throughout for your project.
+  * Feel free to reach out in a ticket request if you need assistance or if you have suggestions for ways to improve this script.
+  * And again, if you enjoy this script or get some valuable use out of it, feel free to consider donating to my wallet, or purchasing an NFT from one of my collections.
+➜ **0x8736ee29f772b9a972547c228a5f43e427e783ae** (Ethereum).<br>
+➜ **One of my collections on OpenSea if you feel like it [Kurt At Work](https://opensea.io/collection/selected-works-kurt-at-work)**.<br>
+➜ **Another one of my collections on OpenSea if you feel like it [Let's Go Brandon NFT](https://opensea.io/collection/letsgobrandon-nft)**.<br>
+➜ **Yet Another of my collections on OpenSea if you feel like it [SeaSlug Called Jamulous](https://opensea.io/collection/a-sea-slug-called-jamulous)**.<br>
+  
     **[What structure should the files have?](https://github.com/kurtatwork/KurtAtWork-OpenSea-Auto-Uploader#data-files-structure)**
+
+
 
 
 ## Data files structure
